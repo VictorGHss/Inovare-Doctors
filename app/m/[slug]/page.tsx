@@ -3,14 +3,15 @@ import { getDoctorSlugs } from "@/lib/doctors";
 
 export const dynamic = "force-static";
 
-type PageProps = {
-  params: { slug: string };
-};
-
 export async function generateStaticParams() {
   return getDoctorSlugs().map((slug) => ({ slug }));
 }
 
-export default async function ShortRoutePage({ params }: PageProps) {
-  redirect(`/medicos/${params.slug}`);
+export default async function ShortRoutePage({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  redirect(`/medicos/${slug}`);
 }

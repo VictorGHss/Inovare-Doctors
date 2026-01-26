@@ -8,16 +8,17 @@ import { getClinicConfig, getDoctorBySlug, getDoctorSlugs, getGoogleInfo } from 
 
 export const dynamic = "force-static";
 
-type PageProps = {
-  params: { slug: string };
-};
-
 export async function generateStaticParams() {
   return getDoctorSlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const doctor = getDoctorBySlug(params.slug);
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const doctor = getDoctorBySlug(slug);
   const clinic = getClinicConfig();
   const siteBaseUrl = process.env.SITE_BASE_URL || "https://medicos-test.ctrls.dev.br";
 
@@ -60,8 +61,13 @@ const SectionCard = ({ title, children }: { title: string; children: React.React
   </AnimatedSection>
 );
 
-export default async function DoctorPage({ params }: PageProps) {
-  const doctor = getDoctorBySlug(params.slug);
+export default async function DoctorPage({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const doctor = getDoctorBySlug(slug);
   const clinic = getClinicConfig();
 
   if (!doctor) {

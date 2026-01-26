@@ -7,7 +7,7 @@ Mini-site público para perfis de médicos (SSG) com rotas amigáveis e QR curto
 - Instale dependências: `npm install` (não executado aqui por ambiente restrito).
 - Dev: `npm run dev`
 - Build local: `npm run build`
-- Build para Pages: `npm run cf:build` (gera `.vercel/output` via next-on-pages).
+- Build para Pages/Cloudflare: `npm run cf:build` (gera `.vercel/output` via next-on-pages; use este comando no pipeline do Pages).
 
 ## Dados (fonte única)
 - Arquivo: `data/doctors.json`
