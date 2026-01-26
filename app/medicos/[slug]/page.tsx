@@ -4,7 +4,10 @@ import type { Metadata } from "next";
 import { AnimatedSection } from "@/app/components/AnimatedSection";
 import { ReviewsSection } from "@/app/components/ReviewsSection";
 import { SiteFooter } from "@/app/components/SiteFooter";
+import { ActionButton } from "@/app/components/ActionButton";
 import { getClinicConfig, getDoctorBySlug, getDoctorSlugs, getGoogleInfo } from "@/lib/doctors";
+import { FiInstagram, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
+import { RiWhatsappLine } from "react-icons/ri";
 
 export const dynamic = "force-static";
 
@@ -84,11 +87,16 @@ export default async function DoctorPage({
   const phoneList = contacts?.phones?.length ? contacts.phones : [clinicPhone];
   const instagramList = contacts?.instagram || [];
   const linksList = contacts?.links || [];
+
+  const primaryWhatsapp = whatsappList[0];
+  const primaryPhone = phoneList[0];
+  const primaryInstagram = instagramList[0];
+  const primaryEmail = contacts?.email;
   const hasContacts =
-    Boolean(contacts?.email) ||
-    whatsappList.length > 0 ||
-    phoneList.length > 0 ||
-    instagramList.length > 0 ||
+    whatsappList.slice(1).length > 0 ||
+    phoneList.slice(1).length > 0 ||
+    instagramList.slice(1).length > 0 ||
+    Boolean(primaryEmail) ||
     linksList.length > 0;
 
   return (
@@ -111,25 +119,30 @@ export default async function DoctorPage({
               ) : null}
             </div>
             <div className="flex flex-wrap gap-2">
-              {whatsappList[0] ? (
-                <a
-                  className="btn-primary"
-                  href={`https://wa.me/${sanitizeTel(whatsappList[0])}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+              {primaryWhatsapp ? (
+                <ActionButton href={`https://wa.me/${sanitizeTel(primaryWhatsapp)}`} icon={<RiWhatsappLine />} variant="primary">
                   WhatsApp
-                </a>
+                </ActionButton>
               ) : null}
-              {phoneList[0] ? (
-                <a className="btn-ghost" href={`tel:${sanitizeTel(phoneList[0])}`}>
+              {primaryPhone ? (
+                <ActionButton href={`tel:${sanitizeTel(primaryPhone)}`} icon={<FiPhone />} variant="primary">
                   Telefone
-                </a>
+                </ActionButton>
               ) : null}
-              {instagramList[0] ? (
-                <a className="btn-ghost" href={instagramList[0]} target="_blank" rel="noopener noreferrer">
+              {primaryEmail ? (
+                <ActionButton href={`mailto:${primaryEmail}`} icon={<FiMail />} variant="primary">
+                  Email
+                </ActionButton>
+              ) : null}
+              {primaryInstagram ? (
+                <ActionButton href={primaryInstagram} icon={<FiInstagram />} variant="primary">
                   Instagram
-                </a>
+                </ActionButton>
+              ) : null}
+              {clinic.google.mapsUrl ? (
+                <ActionButton href={clinic.google.mapsUrl} icon={<FiMapPin />} variant="primary">
+                  Maps
+                </ActionButton>
               ) : null}
             </div>
           </div>
@@ -144,36 +157,35 @@ export default async function DoctorPage({
       {hasContacts ? (
         <SectionCard title="Contatos">
           <div className="flex flex-wrap gap-2">
-            {whatsappList.map((phone) => (
-              <a
+            {whatsappList.slice(1).map((phone) => (
+              <ActionButton
                 key={`wa-${phone}`}
-                className="btn-primary"
                 href={`https://wa.me/${sanitizeTel(phone)}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                icon={<RiWhatsappLine />}
+                variant="soft"
               >
                 WhatsApp {contactLabel(phone)}
-              </a>
+              </ActionButton>
             ))}
-            {phoneList.map((phone) => (
-              <a key={`phone-${phone}`} className="btn-ghost" href={`tel:${sanitizeTel(phone)}`}>
+            {phoneList.slice(1).map((phone) => (
+              <ActionButton key={`phone-${phone}`} href={`tel:${sanitizeTel(phone)}`} icon={<FiPhone />} variant="soft">
                 Telefone {contactLabel(phone)}
-              </a>
+              </ActionButton>
             ))}
-            {contacts?.email ? (
-              <a className="btn-ghost" href={`mailto:${contacts.email}`}>
+            {primaryEmail ? (
+              <ActionButton href={`mailto:${primaryEmail}`} icon={<FiMail />} variant="soft">
                 Email
-              </a>
+              </ActionButton>
             ) : null}
-            {instagramList.map((url) => (
-              <a key={url} className="btn-ghost" href={url} target="_blank" rel="noopener noreferrer">
+            {instagramList.slice(1).map((url) => (
+              <ActionButton key={url} href={url} icon={<FiInstagram />} variant="soft">
                 Instagram
-              </a>
+              </ActionButton>
             ))}
             {linksList.map((link) => (
-              <a key={link.url} className="btn-ghost" href={link.url} target="_blank" rel="noopener noreferrer">
+              <ActionButton key={link.url} href={link.url} variant="soft" external>
                 {link.label}
-              </a>
+              </ActionButton>
             ))}
           </div>
         </SectionCard>
@@ -192,9 +204,9 @@ export default async function DoctorPage({
             <p className="text-sm text-gray-600">{clinic.name}</p>
           </div>
           {google.mapsUrl && (
-            <a className="btn-primary" href={google.mapsUrl} target="_blank" rel="noopener noreferrer">
+            <ActionButton href={google.mapsUrl} variant="primary" icon={<FiMapPin />}>
               Abrir no Maps
-            </a>
+            </ActionButton>
           )}
         </div>
       </SectionCard>
@@ -223,7 +235,7 @@ export default async function DoctorPage({
           </div>
         </SectionCard>
       ) : null}
-      <SiteFooter />
+      <SiteFooter clinic={clinic} />
     </main>
   );
 }

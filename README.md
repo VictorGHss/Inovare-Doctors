@@ -78,3 +78,6 @@ Mini-site público para perfis de médicos (SSG) com rotas amigáveis e QR curto
 - `npm run lint` (Next/TypeScript)
 - `npm run dev` e acesse `http://localhost:3000`
 - Para testar Function local: `npx wrangler pages dev .vercel/output/static --compatibility-date=2024-07-01` após `npm run cf:build`
+
+## Notas
+- UI polish: footer com logo maior e botões de contatos/redes com ícones padronizados.

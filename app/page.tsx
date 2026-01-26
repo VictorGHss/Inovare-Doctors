@@ -80,7 +80,7 @@ export default function HomePage() {
           </AnimatedSection>
         ))}
       </div>
-      <SiteFooter />
+      <SiteFooter clinic={clinic} />
     </main>
   );
 }
