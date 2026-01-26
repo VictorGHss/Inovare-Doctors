@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  background-color: #fffaf3;
+}
+
+body {
+  font-family: var(--font-display), system-ui, -apple-system, sans-serif;
+  color: #1f2933;
+  background: radial-gradient(circle at 10% 20%, #fff3e3 0, transparent 30%),
+    radial-gradient(circle at 90% 10%, #ffe7cd 0, transparent 32%),
+    #fffaf3;
+  min-height: 100vh;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.section-card {
+  @apply rounded-2xl bg-white/80 shadow-soft border border-orange-50 backdrop-blur;
+}
+
+.chip {
+  @apply inline-flex items-center gap-1 rounded-full bg-secondary/70 px-3 py-1 text-sm font-medium text-ink;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#f29b2a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center gap-2 rounded-full border border-orange-100 bg-white px-4 py-3 text-sm font-semibold text-ink transition-colors duration-200 hover:bg-secondary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+}

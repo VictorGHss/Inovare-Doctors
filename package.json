@@ -1,0 +1,37 @@
+{
+  "name": "inovare-medicos",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "cf:build": "next-on-pages",
+    "qr:gen": "node scripts/generate-qrs.js"
+  },
+  "dependencies": {
+    "clsx": "^2.1.0",
+    "framer-motion": "^10.18.0",
+    "next": "^15.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
+    "@cloudflare/workers-types": "^4.20240512.0",
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.2.74",
+    "@types/react-dom": "^18.2.24",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^15.0.3",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}

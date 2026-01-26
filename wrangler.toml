@@ -1,0 +1,5 @@
+name = "inovare-medicos"
+compatibility_date = "2024-07-01"
+
+[vars]
+# CLINIC_PLACE_ID = "defina-o-place-id-da-clinica"
