@@ -11,28 +11,39 @@ export default function HomePage() {
   const clinic = getClinicConfig();
 
   return (
-    <main className="mx-auto flex max-w-5xl flex-col gap-8 px-5 pb-16 pt-10">
+    <main className="mx-auto flex max-w-6xl flex-col gap-8 px-5 pb-16 pt-8 sm:pt-10">
       <AnimatedSection>
-        <div className="section-card flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary/80 p-2">
-              <Image src="/Logo.png" alt="Inovare" width={64} height={64} className="h-12 w-12 object-contain" />
+        <header className="section-card flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-secondary/90 p-2 sm:h-24 sm:w-24">
+              <Image
+                src="/Logo.png"
+                alt="Inovare – Serviços de Saúde"
+                width={96}
+                height={96}
+                className="h-16 w-16 object-contain sm:h-20 sm:w-20"
+                priority
+              />
             </div>
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-amber-800">Inovare – Serviços de Saúde</p>
-              <h1 className="text-3xl font-semibold leading-tight text-ink">Corpo clínico</h1>
-              <p className="text-sm text-gray-600">Perfis otimizados para mobile e QR Code.</p>
+            <div className="space-y-1">
+              <p className="text-xs font-semibold uppercase tracking-[0.1em] text-amber-800">
+                Inovare – Serviços de Saúde
+              </p>
+              <h1 className="text-3xl font-semibold leading-tight text-ink sm:text-4xl">Corpo clínico</h1>
+              <p className="text-sm text-gray-700 sm:text-base">Perfis otimizados para mobile e QR Code.</p>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
             <a href="#medicos" className="btn-primary">
               Ver médicos
             </a>
-            <a href={clinic.google.mapsUrl || "#"} className="btn-ghost" target="_blank" rel="noopener noreferrer">
-              Ver clínica no Maps
-            </a>
+            {clinic.google.mapsUrl ? (
+              <a className="btn-ghost" href={clinic.google.mapsUrl} target="_blank" rel="noopener noreferrer">
+                Ver clínica no Maps
+              </a>
+            ) : null}
           </div>
-        </div>
+        </header>
       </AnimatedSection>
 
       <AnimatedSection delay={0.05}>

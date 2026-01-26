@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { AnimatedSection } from "@/app/components/AnimatedSection";
@@ -89,22 +88,22 @@ export default async function DoctorPage({
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-6 px-5 pb-14 pt-8">
       <AnimatedSection>
-        <header className="section-card p-6">
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary/80 p-2">
+        <header className="section-card p-6 sm:p-7">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-4 sm:gap-6">
+              <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-secondary/90 p-2 sm:h-24 sm:w-24">
                 <Image
                   src="/Logo.png"
-                  alt="Inovare"
-                  width={64}
-                  height={64}
-                  className="h-12 w-12 object-contain"
+                  alt="Inovare – Serviços de Saúde"
+                  width={96}
+                  height={96}
+                  className="h-16 w-16 object-contain sm:h-20 sm:w-20"
                   priority
                 />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide text-amber-800">Inovare – Serviços de Saúde</p>
-                <h1 className="text-3xl font-semibold text-ink">{doctor?.name}</h1>
+                <p className="text-xs uppercase tracking-[0.1em] text-amber-800">Inovare – Serviços de Saúde</p>
+                <h1 className="text-3xl font-semibold text-ink sm:text-4xl">{doctor?.name}</h1>
                 {doctor?.crm && <p className="text-sm text-gray-600">{doctor.crm}</p>}
                 {doctor?.specialties?.length ? (
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -118,28 +117,33 @@ export default async function DoctorPage({
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              {contacts?.whatsapp?.[0] && (
-                <a className="btn-primary" href={`https://wa.me/${sanitizeTel(contacts.whatsapp[0])}`} target="_blank">
+              {contacts?.whatsapp?.[0] ? (
+                <a
+                  className="btn-primary"
+                  href={`https://wa.me/${sanitizeTel(contacts.whatsapp[0])}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   WhatsApp
                 </a>
-              )}
-              {contacts?.phones?.[0] && (
+              ) : null}
+              {contacts?.phones?.[0] ? (
                 <a className="btn-ghost" href={`tel:${sanitizeTel(contacts.phones[0])}`}>
                   Ligar
                 </a>
-              )}
-              {contacts?.instagram?.[0] && (
+              ) : null}
+              {contacts?.instagram?.[0] ? (
                 <a className="btn-ghost" href={contacts.instagram[0]} target="_blank" rel="noopener noreferrer">
                   Instagram
                 </a>
-              )}
+              ) : null}
             </div>
           </div>
-          {doctor?.active === false && (
+          {doctor?.active === false ? (
             <div className="mt-5 rounded-2xl border border-orange-200 bg-secondary/70 p-4 text-amber-900">
               Este profissional não atende mais na Inovare. Consulte os demais especialistas ou fale com a recepção.
             </div>
-          )}
+          ) : null}
         </header>
       </AnimatedSection>
 
@@ -225,18 +229,6 @@ export default async function DoctorPage({
           </div>
         </SectionCard>
       ) : null}
-
-      <AnimatedSection delay={0.05}>
-        <div className="section-card flex items-center justify-between p-4">
-          <div>
-            <p className="text-sm text-gray-600">QR curto</p>
-            <p className="text-base font-semibold text-ink">/m/{doctor?.slug}</p>
-          </div>
-          <Link className="btn-ghost" href={`/m/${doctor?.slug}`}>
-            Ir para a rota curta
-          </Link>
-        </div>
-      </AnimatedSection>
     </main>
   );
 }

@@ -35,9 +35,14 @@ a {
 }
 
 .btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#f29b2a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+  @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#f29b2a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:translate-y-0;
 }
 
 .btn-ghost {
-  @apply inline-flex items-center gap-2 rounded-full border border-orange-100 bg-white px-4 py-3 text-sm font-semibold text-ink transition-colors duration-200 hover:bg-secondary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+  @apply inline-flex min-h-[44px] items-center gap-2 rounded-full border border-orange-100 bg-secondary/60 px-4 py-3 text-sm font-semibold text-ink transition-colors duration-200 hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:translate-y-0;
+}
+
+.btn-primary:disabled,
+.btn-ghost:disabled {
+  @apply cursor-not-allowed opacity-60 hover:translate-y-0 hover:bg-inherit;
 }
