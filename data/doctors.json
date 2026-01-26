@@ -1,7 +1,7 @@
 {
   "clinic": {
     "name": "Inovare – Serviços de Saúde",
-    "address": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+    "address": "R. Carlos Osternack, 111 - Vila Placidina, Ponta Grossa - PR, 84040-120",
     "google": {
       "placeId": "CLINIC_PLACE_ID",
       "mapsUrl": "https://maps.google.com/?q=Inovare+Servicos+de+Saude"
@@ -9,17 +9,17 @@
   },
   "doctors": [
     {
-      "slug": "ana-silva",
-      "name": "Dra. Ana Silva",
-      "crm": "CRM-SP 123456",
-      "specialties": ["Dermatologia", "Dermatologia estética"],
-      "bio": "Dermatologista focada em saúde da pele com abordagem acolhedora. Experiência em cuidados estéticos e clínicos, priorizando resultados naturais.",
-      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "slug": "joelson-jose-gulin",
+      "name": "Dr. Joelson José Gulin",
+      "crm": "CRM – 20363 / RQE: 14779 – 25751 – 478",
+      "specialties": ["Cirurgia do Aparelho Digestivo", "Cirurgia Bariátrica e Metabólica", "Cirurgia Videolaparoscopica"],
+      "bio": "Cirurgião do aparelho digestivo com ampla experiência em procedimentos minimamente invasivos e bariátricos. Comprometido com o cuidado integral do paciente.",
+      "clinicAddress": "R. Carlos Osternack, 111 - Vila Placidina, Ponta Grossa - PR, 84040-120",
       "contacts": {
-        "email": "ana.silva@inovare.med.br",
-        "phones": ["+55 (11) 4000-1000"],
-        "whatsapp": ["+55 (11) 90000-1001"],
-        "instagram": ["https://www.instagram.com/dr.ana.dermato"],
+        "email": "joelson.gulin@inovare.med.br",
+        "phones": ["(42) 3026-2670"],
+        "whatsapp": ["(42) 3026-2601"],
+        "instagram": ["null"],
         "links": [
           {
             "label": "Doctoralia",
@@ -28,12 +28,11 @@
         ]
       },
       "google": {
-        "placeId": "PLACE_ID_ANA",
-        "mapsUrl": "https://maps.google.com/?cid=PLACE_ID_ANA"
+        "placeId": "PLACE_ID_JOELSON",
+        "mapsUrl": "https://maps.google.com/?cid=PLACE_ID_JOELSON"
       },
       "photos": [
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=1200&q=80"
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROoqw8S76uUS0ZBrKmrDCnInUbeT1ieCl__Q&s"
       ]
     },
     {
