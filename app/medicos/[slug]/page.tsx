@@ -92,6 +92,9 @@ export default async function DoctorPage({
   const primaryPhone = phoneList[0];
   const primaryInstagram = instagramList[0];
   const primaryEmail = contacts?.email;
+  const whatsappMessage = encodeURIComponent(
+    `Olá, estou entrando em contato pelo cartão de visita para agendar uma consulta com Dr. ${doctor?.name}.`
+  );
   const hasContacts =
     whatsappList.slice(1).length > 0 ||
     phoneList.slice(1).length > 0 ||
@@ -118,33 +121,6 @@ export default async function DoctorPage({
                 </div>
               ) : null}
             </div>
-            <div className="flex flex-wrap gap-2">
-              {primaryWhatsapp ? (
-                <ActionButton href={`https://wa.me/${sanitizeTel(primaryWhatsapp)}`} icon={<RiWhatsappLine />} variant="primary">
-                  WhatsApp
-                </ActionButton>
-              ) : null}
-              {primaryPhone ? (
-                <ActionButton href={`tel:${sanitizeTel(primaryPhone)}`} icon={<FiPhone />} variant="primary">
-                  Telefone
-                </ActionButton>
-              ) : null}
-              {primaryEmail ? (
-                <ActionButton href={`mailto:${primaryEmail}`} icon={<FiMail />} variant="primary">
-                  Email
-                </ActionButton>
-              ) : null}
-              {primaryInstagram ? (
-                <ActionButton href={primaryInstagram} icon={<FiInstagram />} variant="primary">
-                  Instagram
-                </ActionButton>
-              ) : null}
-              {clinic.google.mapsUrl ? (
-                <ActionButton href={clinic.google.mapsUrl} icon={<FiMapPin />} variant="primary">
-                  Maps
-                </ActionButton>
-              ) : null}
-            </div>
           </div>
           {doctor?.active === false ? (
             <div className="mt-5 rounded-2xl border border-orange-200 bg-secondary/70 p-4 text-amber-900">
@@ -154,13 +130,42 @@ export default async function DoctorPage({
         </header>
       </AnimatedSection>
 
-      {hasContacts ? (
+      {(primaryWhatsapp || primaryPhone || primaryEmail || primaryInstagram || linksList.length) && (
         <SectionCard title="Contatos">
           <div className="flex flex-wrap gap-2">
+            {primaryWhatsapp ? (
+              <ActionButton
+                href={`https://wa.me/${sanitizeTel(primaryWhatsapp)}?text=${whatsappMessage}`}
+                icon={<RiWhatsappLine />}
+                variant="soft"
+              >
+                WhatsApp
+              </ActionButton>
+            ) : null}
+            {primaryPhone ? (
+              <ActionButton href={`tel:${sanitizeTel(primaryPhone)}`} icon={<FiPhone />} variant="soft">
+                Telefone
+              </ActionButton>
+            ) : null}
+            {primaryEmail ? (
+              <ActionButton href={`mailto:${primaryEmail}`} icon={<FiMail />} variant="soft">
+                Email
+              </ActionButton>
+            ) : null}
+            {primaryInstagram ? (
+              <ActionButton href={primaryInstagram} icon={<FiInstagram />} variant="soft">
+                Instagram
+              </ActionButton>
+            ) : null}
+            {linksList.map((link) => (
+              <ActionButton key={link.url} href={link.url} variant="soft" external>
+                {link.label}
+              </ActionButton>
+            ))}
             {whatsappList.slice(1).map((phone) => (
               <ActionButton
                 key={`wa-${phone}`}
-                href={`https://wa.me/${sanitizeTel(phone)}`}
+                href={`https://wa.me/${sanitizeTel(phone)}?text=${whatsappMessage}`}
                 icon={<RiWhatsappLine />}
                 variant="soft"
               >
@@ -172,23 +177,17 @@ export default async function DoctorPage({
                 Telefone {contactLabel(phone)}
               </ActionButton>
             ))}
-            {primaryEmail ? (
-              <ActionButton href={`mailto:${primaryEmail}`} icon={<FiMail />} variant="soft">
-                Email
-              </ActionButton>
-            ) : null}
             {instagramList.slice(1).map((url) => (
               <ActionButton key={url} href={url} icon={<FiInstagram />} variant="soft">
                 Instagram
               </ActionButton>
             ))}
-            {linksList.map((link) => (
-              <ActionButton key={link.url} href={link.url} variant="soft" external>
-                {link.label}
-              </ActionButton>
-            ))}
           </div>
         </SectionCard>
+      )}
+
+      {hasContacts ? (
+        <></>
       ) : null}
 
       {doctor?.bio ? (

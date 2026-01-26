@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "./AnimatedSection";
+import { ActionButton } from "./ActionButton";
+import { FiExternalLink, FiMapPin } from "react-icons/fi";
 
 type Review = {
   author_name: string;
@@ -70,9 +72,9 @@ export function ReviewsSection({ placeId, mapsUrl, fallbackLabel }: Props) {
             {fallbackLabel && <p className="text-sm text-gray-600">{fallbackLabel}</p>}
           </div>
           {urlToGoogle && (
-            <a className="btn-primary" href={urlToGoogle} target="_blank" rel="noopener noreferrer">
+            <ActionButton href={urlToGoogle} variant="primary" icon={urlToGoogle.includes("maps") ? <FiMapPin /> : <FiExternalLink />}>
               Ver no Google
-            </a>
+            </ActionButton>
           )}
         </div>
 
