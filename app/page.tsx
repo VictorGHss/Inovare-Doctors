@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
 import { AnimatedSection } from "./components/AnimatedSection";
+import { SiteFooter } from "./components/SiteFooter";
 import { getClinicConfig, getDoctors } from "@/lib/doctors";
 
 export const dynamic = "force-static";
@@ -13,25 +14,11 @@ export default function HomePage() {
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-8 px-5 pb-16 pt-8 sm:pt-10">
       <AnimatedSection>
-        <header className="section-card flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4 sm:gap-6">
-            <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-secondary/90 p-2 sm:h-24 sm:w-24">
-              <Image
-                src="/Logo.png"
-                alt="Inovare – Serviços de Saúde"
-                width={96}
-                height={96}
-                className="h-16 w-16 object-contain sm:h-20 sm:w-20"
-                priority
-              />
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs font-semibold uppercase tracking-[0.1em] text-amber-800">
-                Inovare – Serviços de Saúde
-              </p>
-              <h1 className="text-3xl font-semibold leading-tight text-ink sm:text-4xl">Corpo clínico</h1>
-              <p className="text-sm text-gray-700 sm:text-base">Perfis otimizados para mobile e QR Code.</p>
-            </div>
+        <header className="section-card flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+          <div className="space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-amber-800">Inovare – Serviços de Saúde</p>
+            <h1 className="text-3xl font-semibold leading-tight text-ink sm:text-4xl">Corpo clínico</h1>
+            <p className="text-sm text-gray-700 sm:text-base">Perfis otimizados para mobile e QR Code.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <a href="#medicos" className="btn-primary">
@@ -94,6 +81,7 @@ export default function HomePage() {
           </AnimatedSection>
         ))}
       </div>
+      <SiteFooter />
     </main>
   );
 }

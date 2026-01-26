@@ -18,14 +18,7 @@
       "contacts": {
         "email": "joelson.gulin@inovare.med.br",
         "phones": ["(42) 3026-2670"],
-        "whatsapp": ["(42) 3026-2601"],
-        "instagram": ["null"],
-        "links": [
-          {
-            "label": "Doctoralia",
-            "url": "https://www.doctoralia.com.br"
-          }
-        ]
+        "whatsapp": ["(42) 3026-2601"]
       },
       "google": {
         "placeId": "PLACE_ID_JOELSON",

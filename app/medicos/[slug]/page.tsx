@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { AnimatedSection } from "@/app/components/AnimatedSection";
 import { ReviewsSection } from "@/app/components/ReviewsSection";
+import { SiteFooter } from "@/app/components/SiteFooter";
 import { getClinicConfig, getDoctorBySlug, getDoctorSlugs, getGoogleInfo } from "@/lib/doctors";
 
 export const dynamic = "force-static";
@@ -78,12 +79,19 @@ export default async function DoctorPage({
   const address = doctor?.clinicAddress || clinic.address;
 
   const contacts = doctor?.contacts;
+  const primaryWhatsapp = contacts?.whatsapp?.[0];
+  const extraWhatsapp = contacts?.whatsapp?.slice(1) || [];
+  const primaryPhone = contacts?.phones?.[0];
+  const extraPhones = contacts?.phones?.slice(1) || [];
+  const instagramList = contacts?.instagram || [];
+  const extraInstagram = instagramList.slice(1);
+  const linksList = contacts?.links || [];
   const hasContacts =
-    contacts?.email ||
-    contacts?.phones?.length ||
-    contacts?.whatsapp?.length ||
-    contacts?.instagram?.length ||
-    contacts?.links?.length;
+    extraWhatsapp.length > 0 ||
+    extraPhones.length > 0 ||
+    extraInstagram.length > 0 ||
+    Boolean(contacts?.email) ||
+    linksList.length > 0;
 
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-6 px-5 pb-14 pt-8">
@@ -101,7 +109,7 @@ export default async function DoctorPage({
                   priority
                 />
               </div>
-              <div>
+              <div className="space-y-1">
                 <p className="text-xs uppercase tracking-[0.1em] text-amber-800">Inovare – Serviços de Saúde</p>
                 <h1 className="text-3xl font-semibold text-ink sm:text-4xl">{doctor?.name}</h1>
                 {doctor?.crm && <p className="text-sm text-gray-600">{doctor.crm}</p>}
@@ -117,23 +125,23 @@ export default async function DoctorPage({
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              {contacts?.whatsapp?.[0] ? (
+              {primaryWhatsapp ? (
                 <a
                   className="btn-primary"
-                  href={`https://wa.me/${sanitizeTel(contacts.whatsapp[0])}`}
+                  href={`https://wa.me/${sanitizeTel(primaryWhatsapp)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   WhatsApp
                 </a>
               ) : null}
-              {contacts?.phones?.[0] ? (
-                <a className="btn-ghost" href={`tel:${sanitizeTel(contacts.phones[0])}`}>
+              {primaryPhone ? (
+                <a className="btn-ghost" href={`tel:${sanitizeTel(primaryPhone)}`}>
                   Ligar
                 </a>
               ) : null}
-              {contacts?.instagram?.[0] ? (
-                <a className="btn-ghost" href={contacts.instagram[0]} target="_blank" rel="noopener noreferrer">
+              {instagramList[0] ? (
+                <a className="btn-ghost" href={instagramList[0]} target="_blank" rel="noopener noreferrer">
                   Instagram
                 </a>
               ) : null}
@@ -150,7 +158,7 @@ export default async function DoctorPage({
       {hasContacts ? (
         <SectionCard title="Contatos">
           <div className="flex flex-wrap gap-2">
-            {contacts?.whatsapp?.map((phone) => (
+            {extraWhatsapp.map((phone) => (
               <a
                 key={`wa-${phone}`}
                 className="btn-primary"
@@ -161,22 +169,22 @@ export default async function DoctorPage({
                 WhatsApp {contactLabel(phone)}
               </a>
             ))}
-            {contacts?.phones?.map((phone) => (
+            {extraPhones.map((phone) => (
               <a key={`phone-${phone}`} className="btn-ghost" href={`tel:${sanitizeTel(phone)}`}>
                 Ligar {contactLabel(phone)}
               </a>
             ))}
-            {contacts?.email && (
+            {contacts?.email ? (
               <a className="btn-ghost" href={`mailto:${contacts.email}`}>
                 Email
               </a>
-            )}
-            {contacts?.instagram?.map((url) => (
+            ) : null}
+            {extraInstagram.map((url) => (
               <a key={url} className="btn-ghost" href={url} target="_blank" rel="noopener noreferrer">
                 Instagram
               </a>
             ))}
-            {contacts?.links?.map((link) => (
+            {linksList.map((link) => (
               <a key={link.url} className="btn-ghost" href={link.url} target="_blank" rel="noopener noreferrer">
                 {link.label}
               </a>
@@ -229,6 +237,7 @@ export default async function DoctorPage({
           </div>
         </SectionCard>
       ) : null}
+      <SiteFooter />
     </main>
   );
 }
