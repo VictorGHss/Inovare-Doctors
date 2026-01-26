@@ -79,18 +79,16 @@ export default async function DoctorPage({
   const address = doctor?.clinicAddress || clinic.address;
 
   const contacts = doctor?.contacts;
-  const primaryWhatsapp = contacts?.whatsapp?.[0];
-  const extraWhatsapp = contacts?.whatsapp?.slice(1) || [];
-  const primaryPhone = contacts?.phones?.[0];
-  const extraPhones = contacts?.phones?.slice(1) || [];
+  const clinicPhone = "(42) 3026-2600";
+  const whatsappList = contacts?.whatsapp || [];
+  const phoneList = contacts?.phones?.length ? contacts.phones : [clinicPhone];
   const instagramList = contacts?.instagram || [];
-  const extraInstagram = instagramList.slice(1);
   const linksList = contacts?.links || [];
   const hasContacts =
-    extraWhatsapp.length > 0 ||
-    extraPhones.length > 0 ||
-    extraInstagram.length > 0 ||
     Boolean(contacts?.email) ||
+    whatsappList.length > 0 ||
+    phoneList.length > 0 ||
+    instagramList.length > 0 ||
     linksList.length > 0;
 
   return (
@@ -98,46 +96,34 @@ export default async function DoctorPage({
       <AnimatedSection>
         <header className="section-card p-6 sm:p-7">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4 sm:gap-6">
-              <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-secondary/90 p-2 sm:h-24 sm:w-24">
-                <Image
-                  src="/Logo.png"
-                  alt="Inovare – Serviços de Saúde"
-                  width={96}
-                  height={96}
-                  className="h-16 w-16 object-contain sm:h-20 sm:w-20"
-                  priority
-                />
-              </div>
-              <div className="space-y-1">
-                <p className="text-xs uppercase tracking-[0.1em] text-amber-800">Inovare – Serviços de Saúde</p>
-                <h1 className="text-3xl font-semibold text-ink sm:text-4xl">{doctor?.name}</h1>
-                {doctor?.crm && <p className="text-sm text-gray-600">{doctor.crm}</p>}
-                {doctor?.specialties?.length ? (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {doctor.specialties.map((spec) => (
-                      <span key={spec} className="chip">
-                        {spec}
-                      </span>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
+            <div className="space-y-1">
+              <p className="text-xs uppercase tracking-[0.1em] text-amber-800">Inovare – Serviços de Saúde</p>
+              <h1 className="text-3xl font-semibold text-ink sm:text-4xl">{doctor?.name}</h1>
+              {doctor?.crm && <p className="text-sm text-gray-600">{doctor.crm}</p>}
+              {doctor?.specialties?.length ? (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {doctor.specialties.map((spec) => (
+                    <span key={spec} className="chip">
+                      {spec}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
             </div>
             <div className="flex flex-wrap gap-2">
-              {primaryWhatsapp ? (
+              {whatsappList[0] ? (
                 <a
                   className="btn-primary"
-                  href={`https://wa.me/${sanitizeTel(primaryWhatsapp)}`}
+                  href={`https://wa.me/${sanitizeTel(whatsappList[0])}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   WhatsApp
                 </a>
               ) : null}
-              {primaryPhone ? (
-                <a className="btn-ghost" href={`tel:${sanitizeTel(primaryPhone)}`}>
-                  Ligar
+              {phoneList[0] ? (
+                <a className="btn-ghost" href={`tel:${sanitizeTel(phoneList[0])}`}>
+                  Telefone
                 </a>
               ) : null}
               {instagramList[0] ? (
@@ -158,7 +144,7 @@ export default async function DoctorPage({
       {hasContacts ? (
         <SectionCard title="Contatos">
           <div className="flex flex-wrap gap-2">
-            {extraWhatsapp.map((phone) => (
+            {whatsappList.map((phone) => (
               <a
                 key={`wa-${phone}`}
                 className="btn-primary"
@@ -169,9 +155,9 @@ export default async function DoctorPage({
                 WhatsApp {contactLabel(phone)}
               </a>
             ))}
-            {extraPhones.map((phone) => (
+            {phoneList.map((phone) => (
               <a key={`phone-${phone}`} className="btn-ghost" href={`tel:${sanitizeTel(phone)}`}>
-                Ligar {contactLabel(phone)}
+                Telefone {contactLabel(phone)}
               </a>
             ))}
             {contacts?.email ? (
@@ -179,7 +165,7 @@ export default async function DoctorPage({
                 Email
               </a>
             ) : null}
-            {extraInstagram.map((url) => (
+            {instagramList.map((url) => (
               <a key={url} className="btn-ghost" href={url} target="_blank" rel="noopener noreferrer">
                 Instagram
               </a>

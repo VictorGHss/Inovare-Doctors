@@ -12,7 +12,7 @@ export function SiteFooter() {
     <footer className="mt-10 border-t border-orange-100/80 bg-white/70 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-8 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4 sm:gap-5">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary/90 p-2 sm:h-20 sm:w-20">
+          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-secondary/90 p-2 sm:h-24 sm:w-24">
             <Image
               src="/Logo.png"
               alt="Inovare – Serviços de Saúde"
