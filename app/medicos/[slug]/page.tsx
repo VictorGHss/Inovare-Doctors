@@ -6,7 +6,7 @@ import { ReviewsSection } from "@/app/components/ReviewsSection";
 import { SiteFooter } from "@/app/components/SiteFooter";
 import { ActionButton } from "@/app/components/ActionButton";
 import { getClinicConfig, getDoctorBySlug, getDoctorSlugs, getGoogleInfo } from "@/lib/doctors";
-import { FiInstagram, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
+import { FiInstagram, FiMail, FiMapPin, FiPhone, FiFacebook } from "react-icons/fi";
 import { RiWhatsappLine } from "react-icons/ri";
 
 export const dynamic = "force-static";
@@ -83,23 +83,22 @@ export default async function DoctorPage({
 
   const contacts = doctor?.contacts;
   const clinicPhone = "(42) 3026-2600";
-  const whatsappList = contacts?.whatsapp || [];
-  const phoneList = contacts?.phones?.length ? contacts.phones : [clinicPhone];
-  const instagramList = contacts?.instagram || [];
+  const whatsappList = Array.from(new Set(contacts?.whatsapp || [])).filter(Boolean);
+  const phoneList = Array.from(new Set(contacts?.phones?.length ? contacts.phones : [clinicPhone])).filter(Boolean);
+  const instagramList = Array.from(new Set(contacts?.instagram || [])).filter(Boolean);
+  const facebookList = Array.from(new Set(contacts?.facebook || [])).filter(Boolean);
   const linksList = contacts?.links || [];
+  const email = contacts?.email;
 
-  const primaryWhatsapp = whatsappList[0];
-  const primaryPhone = phoneList[0];
-  const primaryInstagram = instagramList[0];
-  const primaryEmail = contacts?.email;
   const whatsappMessage = encodeURIComponent(
     `Olá, estou entrando em contato pelo cartão de visita para agendar uma consulta com ${doctor?.name}.`
   );
   const hasContacts =
-    whatsappList.slice(1).length > 0 ||
-    phoneList.slice(1).length > 0 ||
-    instagramList.slice(1).length > 0 ||
-    Boolean(primaryEmail) ||
+    whatsappList.length > 0 ||
+    phoneList.length > 0 ||
+    instagramList.length > 0 ||
+    facebookList.length > 0 ||
+    Boolean(email) ||
     linksList.length > 0;
 
   return (
@@ -130,64 +129,46 @@ export default async function DoctorPage({
         </header>
       </AnimatedSection>
 
-      {(primaryWhatsapp || primaryPhone || primaryEmail || primaryInstagram || linksList.length) && (
+      {hasContacts ? (
         <SectionCard title="Contatos">
           <div className="flex flex-wrap gap-2">
-            {primaryWhatsapp ? (
-              <ActionButton
-                href={`https://wa.me/${sanitizeTel(primaryWhatsapp)}?text=${whatsappMessage}`}
-                icon={<RiWhatsappLine />}
-                variant="soft"
-              >
-                WhatsApp
-              </ActionButton>
-            ) : null}
-            {primaryPhone ? (
-              <ActionButton href={`tel:${sanitizeTel(primaryPhone)}`} icon={<FiPhone />} variant="soft">
-                Telefone
-              </ActionButton>
-            ) : null}
-            {primaryEmail ? (
-              <ActionButton href={`mailto:${primaryEmail}`} icon={<FiMail />} variant="soft">
-                Email
-              </ActionButton>
-            ) : null}
-            {primaryInstagram ? (
-              <ActionButton href={primaryInstagram} icon={<FiInstagram />} variant="soft">
-                Instagram
-              </ActionButton>
-            ) : null}
-            {linksList.map((link) => (
-              <ActionButton key={link.url} href={link.url} variant="soft" external>
-                {link.label}
-              </ActionButton>
-            ))}
-            {whatsappList.slice(1).map((phone) => (
+            {whatsappList.map((phone) => (
               <ActionButton
                 key={`wa-${phone}`}
                 href={`https://wa.me/${sanitizeTel(phone)}?text=${whatsappMessage}`}
                 icon={<RiWhatsappLine />}
                 variant="soft"
               >
-                WhatsApp {contactLabel(phone)}
+                WhatsApp
               </ActionButton>
             ))}
-            {phoneList.slice(1).map((phone) => (
+            {phoneList.map((phone) => (
               <ActionButton key={`phone-${phone}`} href={`tel:${sanitizeTel(phone)}`} icon={<FiPhone />} variant="soft">
-                Telefone {contactLabel(phone)}
+                Telefone
               </ActionButton>
             ))}
-            {instagramList.slice(1).map((url) => (
+            {email ? (
+              <ActionButton href={`mailto:${email}`} icon={<FiMail />} variant="soft">
+                Email
+              </ActionButton>
+            ) : null}
+            {instagramList.map((url) => (
               <ActionButton key={url} href={url} icon={<FiInstagram />} variant="soft">
                 Instagram
               </ActionButton>
             ))}
+            {facebookList.map((url) => (
+              <ActionButton key={url} href={url} icon={<FiFacebook />} variant="soft">
+                Facebook
+              </ActionButton>
+            ))}
+            {linksList.map((link) => (
+              <ActionButton key={link.url} href={link.url} variant="soft" external>
+                {link.label}
+              </ActionButton>
+            ))}
           </div>
         </SectionCard>
-      )}
-
-      {hasContacts ? (
-        <></>
       ) : null}
 
       {doctor?.bio ? (

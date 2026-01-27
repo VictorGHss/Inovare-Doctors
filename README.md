@@ -81,3 +81,4 @@ Mini-site público para perfis de médicos (SSG) com rotas amigáveis e QR curto
 
 ## Notas
 - UI polish: footer com logo maior e botões de contatos/redes com ícones padronizados.
+- Reviews: use `google.placeId` real no `data/doctors.json` quando existir; se faltar, o worker usa `clinic.google.placeId` como fallback.

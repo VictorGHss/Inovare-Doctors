@@ -8,6 +8,7 @@ export type ContactInfo = {
   phones?: string[];
   whatsapp?: string[];
   instagram?: string[];
+  facebook?: string[];
   links?: ContactLink[];
 };
 
