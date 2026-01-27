@@ -93,7 +93,7 @@ export default async function DoctorPage({
   const primaryInstagram = instagramList[0];
   const primaryEmail = contacts?.email;
   const whatsappMessage = encodeURIComponent(
-    `Olá, estou entrando em contato pelo cartão de visita para agendar uma consulta com Dr. ${doctor?.name}.`
+    `Olá, estou entrando em contato pelo cartão de visita para agendar uma consulta com ${doctor?.name}.`
   );
   const hasContacts =
     whatsappList.slice(1).length > 0 ||

@@ -1,7 +1,7 @@
 {
   "clinic": {
     "name": "Inovare – Serviços de Saúde",
-    "address": "R. Carlos Osternack, 111 - Vila Placidina, Ponta Grossa - PR, 84040-120",
+    "address": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
     "google": {
       "placeId": "CLINIC_PLACE_ID",
       "mapsUrl": "https://maps.google.com/?q=Inovare+Servicos+de+Saude"
@@ -9,55 +9,480 @@
   },
   "doctors": [
     {
-      "slug": "joelson-jose-gulin",
-      "name": "Dr. Joelson José Gulin",
-      "crm": "CRM – 20363 / RQE: 14779 – 25751 – 478",
-      "specialties": ["Cirurgia do Aparelho Digestivo", "Cirurgia Bariátrica e Metabólica", "Cirurgia Videolaparoscopica"],
-      "bio": "Cirurgião do aparelho digestivo com ampla experiência em procedimentos minimamente invasivos e bariátricos. Comprometido com o cuidado integral do paciente.",
-      "clinicAddress": "R. Carlos Osternack, 111 - Vila Placidina, Ponta Grossa - PR, 84040-120",
+      "slug": "vania-de-castro-e-braga-gulin",
+      "name": "Dra. Vania de Castro e Braga Gulin",
+      "crm": "CRM 20362 / RQE 12636",
+      "specialties": ["Alergia e Imunologia", "Alergologia"],
+      "bio": "Graduada em Medicina pela FUSVE. Estágio de Alergia e Imunologia pelo Hospital do Servidor Público Estadual-SP. Título de Especialista pela Sociedade Brasileira de Alergia e Imunologia.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
       "contacts": {
-        "email": "joelson.gulin@inovare.med.br",
         "phones": ["(42) 3026-2670"],
         "whatsapp": ["(42) 3026-2601"]
       },
       "google": {
-        "placeId": "PLACE_ID_JOELSON",
-        "mapsUrl": "https://share.google/O13ctl6yCQwysuBOE"
+        "mapsUrl": "https://maps.google.com/?q=Inovare+Servicos+de+Saude"
+      },
+      "photos": [
+        "https://inovare.med.br/wp-content/uploads/2023/02/VANIA-DE-CASTRO_Easy-Resize.com_.jpg"
+      ]
+    },
+    {
+      "slug": "equipe-anestesia",
+      "name": "Equipe de Anestesia",
+      "crm": "",
+      "specialties": ["Anestesiologia"],
+      "bio": "Equipe de anestesiologia atuando em regime de escala na Inovare.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2600", "(42) 3026-2641", "(42) 3026-2640", "(42) 3026-2643"],
+        "whatsapp": ["(42) 3026-2601"]
+      }
+    },
+    {
+      "slug": "ricardo-zanetti-gomes",
+      "name": "Dr. Ricardo Zanetti Gomes",
+      "crm": "CRM 11924 / RQE 4282 – 268",
+      "specialties": ["Cirurgia Vascular", "Angiorradiologia", "Cirurgia Endovascular"],
+      "bio": "Especialista em Cirurgia Vascular, Angiologia e Cirurgia Endovascular. Mestre e Doutor em Cirurgia pela UFPR.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2600", "(42) 3026-2641", "(42) 3026-2640", "(42) 3026-2643"],
+        "whatsapp": ["(42) 3026-2601"],
+        "links": [
+          {
+            "label": "Doctoralia",
+            "url": "https://www.doctoralia.com.br/ricardo-zanetti-gomes/angiologista-cirurgiao-vascular/ponta-grossa"
+          }
+        ]
+      },
+      "google": {
+        "mapsUrl": "https://share.google/WgYcQInJD2Y7U2iH2"
+      },
+      "photos": [
+        "https://scontent.fbfh6-1.fna.fbcdn.net/v/t1.6435-9/121680030_2034907733312656_6235378251983444849_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=I03yOShC5nAQ7kNvwHZePBZ&_nc_oc=AdlBoUmDbrcWTdiWsbhbvOm8DPsNxCeCFYeCeZl-UgCxFS6ia9yS-lSryqKGRsSH-i4&_nc_zt=23&_nc_ht=scontent.fbfh6-1.fna&_nc_gid=Y1TEUcVgdnPAKfkBRiPHTA&oh=00_Afp5NdiTG_ZwMltcO5KtejHn48c-hMVPYVLRxFKVOIg_lA&oe=699F1F66",
+        "https://static.medicosbrasil.com/avatars/K4758627D1.jpg"
+      ]
+    },
+    {
+      "slug": "rubens-sirtoli-filho",
+      "name": "Dr. Rubens Sirtoli Filho",
+      "crm": "CRM 28695 / RQE 1288 – 24128",
+      "specialties": ["Cardiologia", "Cardiologia Intervencionista"],
+      "bio": "Cardiologia e Cardiologia Intervencionista. Residências no Hospital Procardíaco-RJ e Beneficência Portuguesa-SP. Títulos pela SBC e SBHCI.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2663"],
+        "whatsapp": ["(42) 3026-2601", "(42) 98807-9854"],
+        "links": [
+          {
+            "label": "Doctoralia",
+            "url": "https://www.doctoralia.com.br/rubens-sirtoli-filho/cardiologista/ponta-grossa"
+          }
+        ]
+      },
+      "google": {
+        "mapsUrl": "https://share.google/RFcrzEW7wWaB5UZLa"
+      },
+      "photos": [
+        "https://superdrbrasil.com/wp-content/themes/superdr/image/rubens.png",
+        "https://res.cloudinary.com/dvbpgxpx3/image/upload/1603728556img-1108.webp"
+      ]
+    },
+    {
+      "slug": "marcelo-valladao-ferreira-carvalho",
+      "name": "Dr. Marcelo Valladão Ferreira Carvalho",
+      "crm": "CRM 14548 / RQE 5102 – 322 – 14781",
+      "specialties": ["Cardiologia", "Cardiologia Intervencionista"],
+      "bio": "Graduação UNIRIO. Especialização em Cardiologia Intervencionista no Hospital Beneficência Portuguesa de São Paulo. Especialista em Terapia Intensiva pela AMIB.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2663"],
+        "whatsapp": ["(42) 3026-2601", "(42) 98807-9854"]
+      },
+      "photos": [
+        "https://res.cloudinary.com/dvbpgxpx3/image/upload/1624990597marcelo-valladao-ferreira-de-carvalho.webp"
+      ]
+    },
+    {
+      "slug": "liliana-elias-pena-pilatti",
+      "name": "Dra. Liliana Elias Pena Pilatti",
+      "crm": "CRM 16059 / RQE 8926 – 732",
+      "specialties": ["Cardiologia Clínica", "Hemodinâmica", "Cardiologia Intervencionista"],
+      "bio": "Especialista em Cardiologia e Hemodinâmica pela Beneficência Portuguesa-SP. Títulos pela SBC e SBHCI.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2600", "(42) 3026-2641", "(42) 3026-2640", "(42) 3026-2643"],
+        "whatsapp": ["(42) 3026-2601"]
+      },
+      "google": {
+        "mapsUrl": "https://share.google/Sr1w39rUZmFox2Rc3"
+      },
+      "photos": [
+        "https://inovare.med.br/wp-content/uploads/2023/02/LILIANA-ELIAS-PENA__Easy-Resize.com_.jpg"
+      ]
+    },
+    {
+      "slug": "joelson-gulin",
+      "name": "Dr. Joelson José Gulin",
+      "crm": "CRM 20363 / RQE 14779 – 25751 – 478",
+      "specialties": ["Cirurgia do Aparelho Digestivo", "Cirurgia Bariátrica e Metabólica", "Videolaparoscopia"],
+      "bio": "Especialista em Cirurgia do Aparelho Digestivo, Bariátrica e Metabólica. Membro do CBC, CBCD, SBCBM e IFSO.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2670"],
+        "whatsapp": ["(42) 3026-2601"],
+        "facebook": ["https://www.facebook.com/dr.joelsongulin/?locale=pt_BR"]
       },
       "photos": [
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROoqw8S76uUS0ZBrKmrDCnInUbeT1ieCl__Q&s"
       ]
     },
     {
-      "slug": "bruno-costa",
-      "name": "Dr. Bruno Costa",
-      "crm": "CRM-SP 234567",
-      "specialties": ["Ortopedia", "Traumatologia"],
-      "bio": "Ortopedista com foco em reabilitação e retorno seguro a atividades. Adepto de explicações claras e planos de tratamento objetivos.",
+      "slug": "cesar-toshio-oda",
+      "name": "Dr. Cesar Toshio Oda",
+      "crm": "CRM 7286 / RQE 875 – 15198 – 15199",
+      "specialties": ["Cirurgia do Aparelho Digestivo", "Endoscopia Digestiva"],
+      "bio": "Especialista em Cirurgia do Aparelho Digestivo pela UFPR. Pós-graduado em Cirurgia Digestiva pela Universidade de Okayama (Japão). Especialista em Endoscopia Digestiva pela SOBED.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
       "contacts": {
-        "phones": ["+55 (11) 4000-2000"],
-        "whatsapp": ["+55 (11) 98888-2200", "+55 (11) 97777-2200"],
-        "links": [
-          {
-            "label": "LinkedIn",
-            "url": "https://www.linkedin.com"
-          }
-        ]
+        "phones": ["(42) 3026-2600", "(42) 3026-2651", "(42) 3026-2632", "(42) 3026-2630", "(42) 3026-2631", "(42) 3026-2633"],
+        "whatsapp": ["(42) 3026-2601"]
       },
       "photos": [
-        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1200&q=80"
+        "https://inovare.med.br/wp-content/uploads/2023/02/cesar-toshio_Easy-Resize.com_.jpg"
       ]
     },
     {
-      "slug": "carlos-lima",
-      "name": "Dr. Carlos Lima",
-      "crm": "CRM-SP 345678",
-      "specialties": ["Cardiologia"],
-      "bio": "Cardiologista com experiência em prevenção e acompanhamento longitudinal. Mantemos esta página para histórico de pacientes.",
-      "active": false,
+      "slug": "daniel-cartelli",
+      "name": "Dr. Daniel Cartelli",
+      "crm": "CRM 21458 / RQE 16561",
+      "specialties": ["Ortopedia e Traumatologia", "Cirurgia da Mão"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
       "contacts": {
-        "phones": ["+55 (11) 4000-3000"]
+        "phones": ["(42) 3026-2680", "(42) 3026-2681"],
+        "whatsapp": ["(42) 3026-2601"],
+        "instagram": ["https://www.instagram.com/iotcamposgerais/"],
+        "facebook": ["https://www.facebook.com/iotcamposgerais/"],
+        "google": ["https://share.google/L2U0db0fzvX8iN3SP"]
+      },
+      "photos": [
+        "https://res.cloudinary.com/iot-koda/image/upload/c_scale,f_auto,q_auto/img-9700-6532d4c5987df.jpg"
+      ]
+    },
+    {
+      "slug": "luis-felipe-villas-boas",
+      "name": "Dr. Luis Felipe Villas Boas",
+      "crm": "CRM 24847 / RQE 1754",
+      "specialties": ["Ortopedia e Traumatologia"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2680", "(42) 3026-2681"],
+        "whatsapp": ["(42) 3026-2601"],
+        "instagram": ["https://www.instagram.com/iotcamposgerais/"],
+        "facebook": ["https://www.facebook.com/iotcamposgerais/"],
+        "links": [
+          {
+            "label": "Doctoralia",
+            "url": "https://www.doctoralia.com.br/luis-felipe-villas-boas/ortopedista-traumatologista/ponta-grossa"
+          }
+        ],
+        "google": ["https://share.google/L2U0db0fzvX8iN3SP"]
+      },
+      "photos": [
+        "https://res.cloudinary.com/iot-koda/image/upload/c_scale,f_auto,q_auto/img-9634-6532d56f6e795.jpg"
+      ]
+    },
+    {
+      "slug": "rodrigo-caldonazzo-favaro",
+      "name": "Dr. Rodrigo Caldonazzo Favaro",
+      "crm": "CRM 24821 / RQE 1723",
+      "specialties": ["Ortopedia e Traumatologia"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2680", "(42) 3026-2681"],
+        "whatsapp": ["(42) 3026-2601"],
+        "instagram": ["https://www.instagram.com/iotcamposgerais/"],
+        "facebook": ["https://www.facebook.com/iotcamposgerais/"],
+        "google": ["https://share.google/L2U0db0fzvX8iN3SP"]
+      },
+      "photos": [
+        "https://res.cloudinary.com/iot-koda/image/upload/c_scale,f_auto,q_auto/img-9546-6532d6e5250e5.jpg"
+      ]
+    },
+    {
+      "slug": "rafael-pancan-de-biaggi",
+      "name": "Dr. Rafael Pançan de Biaggi",
+      "crm": "CRM 32977 / RQE 23701",
+      "specialties": ["Ortopedia e Traumatologia"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2680", "(42) 3026-2681"],
+        "whatsapp": ["(42) 3026-2601"],
+        "instagram": ["https://www.instagram.com/iotcamposgerais/"],
+        "facebook": ["https://www.facebook.com/iotcamposgerais/"],
+        "google": ["https://share.google/L2U0db0fzvX8iN3SP"]
+      },
+      "photos": [
+        "https://res.cloudinary.com/iot-koda/image/upload/c_scale,f_auto,q_auto/img-9525-6532d71c7d4a0.jpg"
+      ]
+    },
+    {
+      "slug": "franklin-roberto-hilgemberg",
+      "name": "Dr. Franklin Roberto Hilgemberg",
+      "crm": "CRM 26375 / RQE 20771",
+      "specialties": ["Ortopedia e Traumatologia"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2680", "(42) 3026-2681"],
+        "whatsapp": ["(42) 3026-2601"],
+        "instagram": ["https://www.instagram.com/iotcamposgerais/"],
+        "facebook": ["https://www.facebook.com/iotcamposgerais/"],
+        "links": [
+          {
+            "label": "Doctoralia",
+            "url": "https://www.doctoralia.com.br/franklin-roberto-hilgemberg/ortopedista-traumatologista/ponta-grossa"
+          }
+        ],
+        "google": ["https://share.google/L2U0db0fzvX8iN3SP"]
+      },
+      "photos": [
+        "https://s3-sa-east-1.amazonaws.com/doctoralia.com.br/doctor/14e753/14e753ed8f56ad13510da6b4378e88e2_large.jpg"
+      ]
+    },
+    {
+      "slug": "marina-claudia-polydoro",
+      "name": "Dra. Marina Claudia Polydoro",
+      "crm": "CRM PR 39479 / RQE 28447 / RQE 33192",
+      "specialties": ["Ortopedia e Traumatologia"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2680", "(42) 3026-2681"],
+        "whatsapp": ["(42) 3026-2601"],
+        "instagram": ["https://www.instagram.com/iotcamposgerais/", "https://www.instagram.com/dra.marinapolydoro/"],
+        "facebook": ["https://www.facebook.com/dra.marinapolydoro/", "https://www.facebook.com/iotcamposgerais/"],
+        "links": [
+          {
+            "label": "Site",
+            "url": "https://dramarinapolydoro.com.br/"
+          }
+        ],
+        "google": ["https://share.google/L2U0db0fzvX8iN3SP"]
+      },
+      "photos": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVytiLBB8fbwXzUmt2VG81bq0t7ndZE1qSA&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg6PGrHmmH233GdE9L6t-DjVckQYsW4JRt2w&s"
+      ]
+    },
+    {
+      "slug": "carlos-eduardo-miers-gruhl",
+      "name": "Dr. Carlos Eduardo Miers Gruhl",
+      "crm": "CRM 27513 / RQE 18676",
+      "specialties": ["Ortopedia e Traumatologia"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2680", "(42) 3026-2681"],
+        "whatsapp": ["(42) 3026-2601"],
+        "instagram": ["https://www.instagram.com/dr.carlosmiers/", "https://www.instagram.com/iotcamposgerais/"],
+        "facebook": ["https://www.facebook.com/DrCarlosEduardoMiers/?locale=pt_BR", "https://www.facebook.com/iotcamposgerais/"],
+        "google": ["https://share.google/L2U0db0fzvX8iN3SP"]
+      },
+      "photos": [
+        "https://s3-sa-east-1.amazonaws.com/doctoralia.com.br/doctor/8ceb84/8ceb841fae080e0d54b9d01866a833fa_large.jpg",
+        "https://melhores.com/catalogs/resources?serviceUnitId=castro-pr/carlos-eduardo-miers-gruhl"
+      ]
+    },
+    {
+      "slug": "daniel-seiti-kurihara-oda",
+      "name": "Dr. Daniel Seiti Kurihara Oda",
+      "crm": "CRM 27175 / RQE 20524 – 20525",
+      "specialties": ["Cirurgia do Aparelho Digestivo", "Cirurgia Geral"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2600", "(42) 3026-2651", "(42) 3026-2632", "(42) 3026-2630", "(42) 3026-2631", "(42) 3026-2633"],
+        "whatsapp": ["(42) 3026-2601"],
+        "facebook": ["https://www.facebook.com/profile.php?id=100090635755177"],
+        "instagram": ["https://www.instagram.com/dr.danieloda?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="]
+      },
+      "photos": [
+        "https://scontent.fbfh6-1.fna.fbcdn.net/v/t39.30808-1/339738451_1553494738471470_1083454973649216567_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=105&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=TDcxYTjxigwQ7kNvwF20aDb&_nc_oc=Adk2M1np-kcDeO1SYtWzp_JsaePYxhXTZhfLUEFvOf4J136AcJB1YiSMKlcYodalj74&_nc_zt=24&_nc_ht=scontent.fbfh6-1.fna&_nc_gid=DIIMCS9YYIBVggr9i8vMNw&oh=00_Afpvu_GR9dMXiIu7KykFNteHSQpeMivYbXDpdhsFdLBi2Q&oe=697DB605"
+      ]
+    },
+    {
+      "slug": "victor-mauro",
+      "name": "Dr. Victor Mauro",
+      "crm": "CRM 22484 / RQE 14289",
+      "specialties": ["Cirurgia Plástica"],
+      "bio": "Graduado pela UFPR. Especialista em Cirurgia Geral (Hospital Ipiranga) e Cirurgia Plástica (Hospital Servidores do Estado do RJ).",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2600", "(42) 3026-2641", "(42) 3026-2640", "(42) 3026-2643"],
+        "whatsapp": ["(42) 3026-2601"],
+        "site": ["https://victormauro.com.br/"],
+        "instagram": ["https://www.instagram.com/drvictormauro/"],
+        "facebook": ["https://www.facebook.com/drvictormauro/?locale=pt_BR"],
+        "links": [
+          {
+            "label": "Doctoralia",
+            "url": "https://www.doctoralia.com.br/victor-mauro/cirurgiao-plastico/ponta-grossa"
+          }
+        ]
+      },
+      "google": {
+        "mapsUrl": "https://share.google/pMKOmGH8AufrhNgT6"
+      },
+      "photos": [
+        "https://lh3.googleusercontent.com/p/AF1QipNpazduIeMwXW-HeKegFrm9NThiO3_Zhb-z7Qgh=s680-w680-h510-rw"
+      ]
+    },
+    {
+      "slug": "magno-zanellato",
+      "name": "Dr. Magno Zanellato",
+      "crm": "CRM 15277 / RQE 9822 – 17224",
+      "specialties": ["Cirurgia Torácica", "Pneumologia"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2650"],
+        "whatsapp": ["(42) 3026-2601"],
+        "instagram": ["https://www.instagram.com/doutormagnozanellato/"],
+        "facebook": ["https://www.facebook.com/doutormagnozanellato/"],
+        "links": [
+          {
+            "label": "Site",
+            "url": "https://www.magnozanellato.com.br/"
+          },
+          {
+            "label": "Doctoralia",
+            "url": "https://www.doctoralia.com.br/magno-zanellato/pneumologista-cirurgiao-toracico/ponta-grossa"
+          }
+        ]
+      },
+      "google": {
+        "mapsUrl": "https://share.google/lnfL4VpRtTycscIyR"
+      },
+      "photos": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJc8pB5uepW682vRpm69GVKQn48czz5Ts_0Q&s"
+      ]
+    },
+    {
+      "slug": "karen-kono-miyabukuro",
+      "name": "Dra. Karen Kono Miyabukuro",
+      "crm": "CRM 23197 / RQE 17761",
+      "specialties": ["Cirurgia Vascular"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2600", "(42) 3026-2641", "(42) 3026-2640", "(42) 3026-2643"],
+        "whatsapp": ["(42) 3026-2601"]
       }
+    },
+    {
+      "slug": "bruno-figueiredo-pancan",
+      "name": "Dr. Bruno Figueiredo Pançan",
+      "crm": "CRM 30201 / RQE 24026",
+      "specialties": ["Cirurgia Vascular"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2600", "(42) 3026-2641", "(42) 3026-2640", "(42) 3026-2643"],
+        "whatsapp": ["(42) 3026-2601"]
+      },
+      "google": {
+        "mapsUrl": "https://share.google/4kRthUTLVoEWMvSuy"
+      },
+      "photos": [
+        "https://www.angiolifeclinica.com.br/wp-content/uploads/2022/08/WhatsApp-Image-2022-08-08-at-22.41.46.jpeg",
+        "https://cdn.dpontanews.com.br/midia/2025/02/27/1759348455116_whatsapp-image-2025-02-27-at-083225_resized.webp"
+      ]
+    },
+    {
+      "slug": "beatriz-kravchychyn",
+      "name": "Beatriz Kravchychyn",
+      "crm": "CRO-PR 36229",
+      "specialties": ["Odontologia", "Harmonização Orofacial"],
+      "bio": "Aperfeiçoamento em Endodontia Mecanizada (ABO). Aperfeiçoamento em Harmonização Orofacial (ABO).",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2600", "(42) 3026-2641", "(42) 3026-2640", "(42) 3026-2643"],
+        "whatsapp": ["(42) 3026-2601"]
+      },
+      "photos": [
+        "https://inovare.med.br/wp-content/uploads/2024/02/Beatriz-Kravchychyn_Easy-Resize.com_.jpg"
+      ]
+    },
+    {
+      "slug": "giuliano-schultz-doretto-campanari",
+      "name": "Dr. Giuliano Schultz Doretto Campanari",
+      "crm": "CRM 17596 / RQE 15863",
+      "specialties": ["Dermatologia"],
+      "bio": "Graduado pela PUC-PR. Especialista em Medicina Interna e Dermatologia pela Santa Casa de Misericórdia de Curitiba.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2674"],
+        "whatsapp": ["(42) 3026-2601"]
+      },
+      "photos": [
+        "https://inovare.med.br/wp-content/uploads/2023/02/GIULIANO-SCHULTZ__Easy-Resize.com_.jpg"
+      ]
+    },
+    {
+      "slug": "radiologia-diagnostico-equipe",
+      "name": "Equipe de Radiologia e Diagnóstico por Imagem",
+      "specialties": ["Radiologia e Diagnóstico por Imagem"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2620", "(42) 3026-5511"],
+        "whatsapp": ["(42) 99987-6740"]
+      },
+      "photos": [
+        "https://cdn.dpontanews.com.br/midia/2025/10/01/1759346202942_abertura-ja-tratada-divulgaccca7acc83o_otimized.webp"
+      ]
+    },
+    {
+      "slug": "luciana-freitas-wenzel",
+      "name": "Dra. Luciana Freitas Wenzel",
+      "crm": "CRM 28409 / RQE 2371",
+      "specialties": ["Ecocardiografia"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2605"],
+        "whatsapp": ["(42) 3026-2605"]
+      },
+      "photos": [
+        "https://scontent.fbfh6-1.fna.fbcdn.net/v/t1.6435-9/33221536_1705662126211907_8321244397194706944_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=Ag7iV_TdIkoQ7kNvwF7vxk6&_nc_oc=AdkAN0YvW4T62RMZNjH4f0AyTYSNAdS9Jj1fwwuGkEv44jE0gtcPu1N8A8SxEPqj1G0&_nc_zt=23&_nc_ht=scontent.fbfh6-1.fna&_nc_gid=wcb76j6MF5NODZUNMY721A&oh=00_AfqQvDRju92IY-XIW0etInOt6KHakvvCk2mnjXGs-Mvd4g&oe=699F4E8A"
+      ]
+    },
+    {
+      "slug": "anderson-ghirotti-brega",
+      "name": "Dr. Anderson Ghirotti Brega",
+      "crm": "CRM 18289 / RQE 18607",
+      "specialties": ["Ecocardiografia"],
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2605"],
+        "whatsapp": ["(42) 3026-2605"]
+      },
+      "photos": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKnp6ttWZQ2IcrZpJQBld9u22JPLWt_xAFKg&s"
+      ]
+    },
+    {
+      "slug": "alexandre-barao-acuna",
+      "name": "Dr. Alexandre Barão Acuña",
+      "crm": "CRM 17824 / RQE 10425",
+      "specialties": ["Endocrinologia e Metabologia"],
+      "bio": "Pós-graduado em Endocrinologia e Metabologia pela UNESP. Título de Especialista pela Sociedade Brasileira de Endocrinologia e Metabologia.",
+      "clinicAddress": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+      "contacts": {
+        "phones": ["(42) 3026-2648"],
+        "whatsapp": ["(42) 3026-2601", "(42) 99133-0019"],
+        "instagram": ["https://www.instagram.com/alexandreacuna/"],
+        "facebook": ["https://www.facebook.com/dr.alexandre.barao.acuna"],
+        "site": ["https://alexandreacuna.com.br/"]
+      },
+      "google": {
+        "mapsUrl": "https://share.google/2MIfipIyhc8oitEPh"
+      },
+      "photos": [
+        "https://inovare.med.br/wp-content/uploads/2023/02/Alexandre.jpg_Easy-Resize.com_.jpg"
+      ]
     }
   ]
 }
