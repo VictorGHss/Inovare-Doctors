@@ -6,6 +6,7 @@ import { ReviewsSection } from "@/app/components/ReviewsSection";
 import { SiteFooter } from "@/app/components/SiteFooter";
 import { ActionButton } from "@/app/components/ActionButton";
 import { getClinicConfig, getDoctorBySlug, getDoctorSlugs, getGoogleInfo } from "@/lib/doctors";
+import { resolveReviewConfig } from "@/lib/reviewSources";
 import { FiInstagram, FiMail, FiMapPin, FiPhone, FiFacebook } from "react-icons/fi";
 import { RiWhatsappLine } from "react-icons/ri";
 import { buildTelLink, buildWhatsappLink, displayLabel } from "@/lib/phone";
@@ -75,7 +76,7 @@ export default async function DoctorPage({
   }
 
   const google = getGoogleInfo(doctor);
-  const usingClinicReviews = !doctor?.google?.placeId && Boolean(clinic.google.placeId);
+  const reviewConfig = resolveReviewConfig(doctor, clinic);
   const address = doctor?.clinicAddress || clinic.address;
 
   const contacts = doctor?.contacts;
@@ -189,9 +190,10 @@ export default async function DoctorPage({
       </SectionCard>
 
       <ReviewsSection
-        placeId={google.placeId}
+        slug={doctor.slug}
+        placeId={reviewConfig.placeId}
         mapsUrl={google.mapsUrl}
-        fallbackLabel={usingClinicReviews ? "Avaliações da Inovare – Serviços de Saúde" : undefined}
+        fallbackLabel={reviewConfig.displayLabel}
       />
 
       {doctor?.photos?.length ? (

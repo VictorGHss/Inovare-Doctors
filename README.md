@@ -27,17 +27,23 @@ Mini-site público para perfis de médicos (SSG) com rotas amigáveis e QR curto
 - QR curto: rota `/m/{slug}` redireciona para `/medicos/{slug}`.
 
 ## Reviews do Google
-- Function: `functions/api/reviews.ts`
-- Querystring: `placeId` (se não vier, usa `CLINIC_PLACE_ID` global).
+- Handler: `app/api/reviews/route.ts` (Edge runtime via next-on-pages).
+- Querystring: `slug` (preferencial, resolve placeId/filtros pelo médico) ou `placeId` (legado).
 - Resposta: `rating`, `user_ratings_total`, `url`, `reviews[]`.
-- Cache na edge: 6h por `placeId`.
+- Filtros no backend:
+  - `MIN_REVIEW_RATING` (default 3.5) filtra por estrelas.
+  - Quando usa placeId da clínica (fallback), filtra texto por sobrenomes (`REVIEW_SURNAMES` ou `REVIEW_SURNAME`) e limita a 3 reviews.
+- Cache na edge: 6h por combinação `placeId+filtros`.
 - Se falhar, UI esconde blocos e mantém botão “Ver no Google” quando houver URL.
 - Em `next dev` o endpoint `/api/reviews` não roda; use Cloudflare Pages (deploy) ou `npx wrangler pages dev .vercel/output/static --compatibility-date=2024-07-01` após `npm run cf:build` para testar.
 
 ### Variáveis de ambiente (Cloudflare Pages/Workers)
-- `GOOGLE_PLACES_API_KEY` (Google Places Details)
+- `GOOGLE_PLACES_API_KEY` (Google Places Details; chave de servidor, sem restrição por referrer)
 - `CLINIC_PLACE_ID` (fallback da clínica)
-- Opcional: defina também em `wrangler.toml`/Painel Pages para dev local com `wrangler pages dev`.
+- `MIN_REVIEW_RATING` (ex: `3.5`)
+- `REVIEW_SURNAMES` (ex: `Gulin,Zanetti,Oda`; usado só quando o placeId é o da clínica)
+- `SITE_BASE_URL` (ex: `https://medicos-test.ctrls.dev.br`)
+- Opcional: `QR_BASE_URL`
 
 ## Deploy no Cloudflare Pages
 - Repositório conectado ao GitHub.

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getClinicConfig } from "@/lib/doctors";
+import { getClinicConfig, getDoctorBySlug } from "@/lib/doctors";
+import { resolveReviewConfig } from "@/lib/reviewSources";
 
 export const runtime = "edge";
 
@@ -25,15 +26,56 @@ const CACHE_TTL = 60 * 60 * 6; // 6 horas
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const placeId = url.searchParams.get("placeId");
+  const placeIdParam = url.searchParams.get("placeId");
+  const slugParam = url.searchParams.get("slug");
+  const limitParam = Number(url.searchParams.get("limit") ?? "3");
+  const offsetParam = Number(url.searchParams.get("offset") ?? "0");
 
   const clinic = getClinicConfig();
-  const effectivePlaceId = placeId || clinic.google.placeId;
+  const doctor = slugParam ? getDoctorBySlug(slugParam) : undefined;
+  if (slugParam && !doctor) {
+    return NextResponse.json(
+      { error: "Doctor not found" },
+      { status: 404, headers: { "x-reviews-handler": "next-route" } }
+    );
+  }
+
+  const resolved = doctor
+    ? resolveReviewConfig(doctor, clinic)
+    : {
+        placeId: placeIdParam || clinic.google.placeId || "",
+        minRating: Number(process.env.MIN_REVIEW_RATING ?? "3.5"),
+        surnameTokens: [],
+        useSurnameFilter: false,
+        displayLabel: undefined,
+        sourceMode: placeIdParam ? "individual" : "clinic"
+      };
+  const effectivePlaceId = placeIdParam || resolved.placeId;
+  const minRating = resolved.minRating;
+  const limit = Number.isFinite(limitParam) && limitParam > 0 ? Math.min(limitParam, 20) : 3;
+  const offset = Number.isFinite(offsetParam) && offsetParam >= 0 ? offsetParam : 0;
+  const surnamesRaw = (process.env.REVIEW_SURNAMES || process.env.REVIEW_SURNAME || "").trim();
+  const surnameList = surnamesRaw
+    .split(",")
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+  const normalizeToken = (token: string) =>
+    token
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim()
+      .toLowerCase();
+  const surnameTokens = (resolved.surnameTokens.length > 0 ? resolved.surnameTokens : surnameList).map(normalizeToken);
+  const useSurnameFilter = resolved.useSurnameFilter && surnameTokens.length > 0;
+  const isClinicFallback = resolved.sourceMode === "clinic" || effectivePlaceId === clinic.google.placeId;
+  const applySurnameFilter = useSurnameFilter && (isClinicFallback || resolved.sourceMode === "group");
 
   console.info(
-    `reviews: handler=edge placeIdProvided=${Boolean(placeId)} clinicPlaceId=${Boolean(
+    `reviews: handler=edge slug=${slugParam ?? "n/a"} placeIdProvided=${Boolean(placeIdParam)} clinicPlaceId=${Boolean(
       clinic.google.placeId
-    )} apiKeyPresent=${Boolean(process.env.GOOGLE_PLACES_API_KEY)}`
+    )} apiKeyPresent=${Boolean(process.env.GOOGLE_PLACES_API_KEY)} minRating=${minRating} surnames=${
+      surnameTokens.length
+    } isClinicFallback=${isClinicFallback}`
   );
 
   if (!effectivePlaceId) {
@@ -53,7 +95,11 @@ export async function GET(req: Request) {
     );
   }
 
-  const cacheKey = new Request(`${url.origin}/api/reviews?placeId=${effectivePlaceId}`);
+  const cacheKey = new Request(
+    `${url.origin}/api/reviews?placeId=${effectivePlaceId}&minRating=${minRating}&surnames=${surnameTokens.join(
+      "|"
+    )}&limit=${limit}&offset=${offset}&slug=${slugParam ?? ""}`
+  );
   const cache = (caches as unknown as { default?: Cache }).default;
   if (cache) {
     const cached = await cache.match(cacheKey);
@@ -95,7 +141,13 @@ export async function GET(req: Request) {
 
       if (googleJson.status === "ZERO_RESULTS") {
         return NextResponse.json(
-          { rating: null, user_ratings_total: 0, reviews: [], url: googleJson.result?.url },
+          {
+            rating: null,
+            user_ratings_total: 0,
+            reviews: [],
+            url: googleJson.result?.url,
+            displayLabel: resolved.displayLabel
+          },
           { status: 200, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
         );
       }
@@ -110,16 +162,39 @@ export async function GET(req: Request) {
       );
     }
 
-    const payload = {
-      rating: googleJson.result.rating,
-      user_ratings_total: googleJson.result.user_ratings_total,
-      url: googleJson.result.url,
-      reviews: (googleJson.result.reviews || []).map((review) => ({
+    const filteredReviews = (googleJson.result.reviews || [])
+      .filter((review) => {
+        if (typeof review.rating === "number" && review.rating < minRating) return false;
+        if (applySurnameFilter) {
+          const text = (review.text || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+          if (!text) return false;
+          return surnameTokens.some((sn) => text.includes(sn));
+        }
+        return true;
+      })
+      .map((review) => ({
         author_name: review.author_name,
         rating: review.rating,
         text: review.text,
         relative_time_description: review.relative_time_description
-      }))
+      }));
+
+    const totalAfterFilter = filteredReviews.length;
+    const paged = filteredReviews.slice(offset, offset + limit);
+    const nextOffset = offset + limit < totalAfterFilter ? offset + limit : null;
+
+    const payload = {
+      rating: googleJson.result.rating,
+      user_ratings_total: googleJson.result.user_ratings_total,
+      url: googleJson.result.url,
+      reviews: paged,
+      returned: paged.length,
+      totalAfterFilter,
+      nextOffset,
+      displayLabel: resolved.displayLabel
     };
 
     const response = new NextResponse(JSON.stringify(payload), {

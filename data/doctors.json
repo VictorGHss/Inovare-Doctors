@@ -73,7 +73,12 @@
       },
       "google": {
         "placeId": "ChIJg8DRLusb6JQRM-AElkF15D8",
-        "mapsUrl": "https://share.google/RFcrzEW7wWaB5UZLa"
+        "mapsUrl": "https://share.google/RFcrzEW7wWaB5UZLa",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJg8DRLusb6JQRM-AElkF15D8",
+          "surnameTokens": ["Sirtoli"]
+        }
       },
       "photos": [
         "https://superdrbrasil.com/wp-content/themes/superdr/image/rubens.png",
@@ -94,7 +99,12 @@
         "https://res.cloudinary.com/dvbpgxpx3/image/upload/1624990597marcelo-valladao-ferreira-de-carvalho.webp"
       ],
       "google": {
-        "placeId": "ChIJg8DRLusb6JQRM-AElkF15D8"
+        "placeId": "ChIJg8DRLusb6JQRM-AElkF15D8",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJg8DRLusb6JQRM-AElkF15D8",
+          "surnameTokens": ["Valladão", "Valladao", "Carvalho"]
+        }
       }
     },
     {
@@ -146,7 +156,12 @@
         "https://inovare.med.br/wp-content/uploads/2023/02/cesar-toshio_Easy-Resize.com_.jpg"
       ],
       "google": {
-        "placeId": "ChIJsZbOvwUa6JQR9B2EBx_JsUI"
+        "placeId": "ChIJsZbOvwUa6JQR9B2EBx_JsUI",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJsZbOvwUa6JQR9B2EBx_JsUI",
+          "surnameTokens": ["Oda"]
+        }
       }
     },
     {
@@ -164,7 +179,12 @@
       },
       "google": {
         "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
-        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP"
+        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
+          "surnameTokens": ["Cartelli"]
+        }
       },
       "photos": [
         "https://res.cloudinary.com/iot-koda/image/upload/c_scale,f_auto,q_auto/img-9700-6532d4c5987df.jpg",
@@ -187,7 +207,12 @@
       },
       "google": {
         "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
-        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP"
+        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
+          "surnameTokens": ["Villas", "Boas"]
+        }
       },
       "photos": [
         "https://res.cloudinary.com/iot-koda/image/upload/c_scale,f_auto,q_auto/img-9634-6532d56f6e795.jpg"
@@ -208,7 +233,12 @@
       },
       "google": {
         "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
-        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP"
+        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
+          "surnameTokens": ["Caldonazzo", "Favaro"]
+        }
       },
       "photos": [
         "https://res.cloudinary.com/iot-koda/image/upload/c_scale,f_auto,q_auto/img-9546-6532d6e5250e5.jpg"
@@ -229,7 +259,12 @@
       },
       "google": {
         "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
-        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP"
+        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
+          "surnameTokens": ["Pançan", "Pancan", "Biaggi"]
+        }
       },
       "photos": [
         "https://res.cloudinary.com/iot-koda/image/upload/c_scale,f_auto,q_auto/img-9525-6532d71c7d4a0.jpg"
@@ -251,7 +286,12 @@
       },
       "google": {
         "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
-        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP"
+        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
+          "surnameTokens": ["Hilgemberg"]
+        }
       },
       "photos": [
         "https://s3-sa-east-1.amazonaws.com/doctoralia.com.br/doctor/14e753/14e753ed8f56ad13510da6b4378e88e2_large.jpg"
@@ -277,7 +317,12 @@
       },
       "google": {
         "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
-        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP"
+        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
+          "surnameTokens": ["Polydoro"]
+        }
       },
       "photos": [
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVytiLBB8fbwXzUmt2VG81bq0t7ndZE1qSA&s",
@@ -303,7 +348,12 @@
       },
       "google": {
         "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
-        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP"
+        "mapsUrl": "https://share.google/L2U0db0fzvX8iN3SP",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJY9wtc-ob6JQRtSYIa7PpR9A",
+          "surnameTokens": ["Miers", "Gruhl"]
+        }
       },
       "photos": [
         "https://s3-sa-east-1.amazonaws.com/doctoralia.com.br/doctor/8ceb84/8ceb841fae080e0d54b9d01866a833fa_large.jpg",
@@ -329,7 +379,12 @@
         "https://scontent.fbfh6-1.fna.fbcdn.net/v/t39.30808-1/339738451_1553494738471470_1083454973649216567_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=105&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=TDcxYTjxigwQ7kNvwF20aDb&_nc_oc=Adk2M1np-kcDeO1SYtWzp_JsaePYxhXTZhfLUEFvOf4J136AcJB1YiSMKlcYodalj74&_nc_zt=24&_nc_ht=scontent.fbfh6-1.fna&_nc_gid=DIIMCS9YYIBVggr9i8vMNw&oh=00_Afpvu_GR9dMXiIu7KykFNteHSQpeMivYbXDpdhsFdLBi2Q&oe=697DB605"
       ],
       "google": {
-        "placeId": "ChIJsZbOvwUa6JQR9B2EBx_JsUI"
+        "placeId": "ChIJsZbOvwUa6JQR9B2EBx_JsUI",
+        "reviewSource": {
+          "mode": "group",
+          "placeId": "ChIJsZbOvwUa6JQR9B2EBx_JsUI",
+          "surnameTokens": ["Oda"]
+        }
       }
     },
     {

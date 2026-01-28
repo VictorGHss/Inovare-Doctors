@@ -15,6 +15,12 @@ export type ContactInfo = {
 export type GoogleInfo = {
   placeId?: string;
   mapsUrl?: string;
+  reviewSource?: {
+    mode?: "individual" | "group" | "clinic";
+    placeId?: string;
+    surnameTokens?: string[];
+    notes?: string;
+  };
 };
 
 export type Doctor = {
