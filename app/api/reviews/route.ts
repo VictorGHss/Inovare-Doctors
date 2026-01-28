@@ -49,7 +49,13 @@ export async function GET(req: Request) {
   googleUrl.searchParams.set("fields", "rating,user_ratings_total,reviews,url");
   googleUrl.searchParams.set("reviews_no_translations", "true");
 
-  const googleResponse = await fetch(googleUrl.toString());
+  const googleResponse = await fetch(googleUrl.toString(), {
+    // Some API keys may be restricted by HTTP referrer. Edge runtime requests don't send one by default,
+    // so we set it explicitly to the site base URL (or current origin) to satisfy referrer-based keys.
+    headers: {
+      Referer: process.env.SITE_BASE_URL || url.origin
+    }
+  });
   if (!googleResponse.ok) {
     return NextResponse.json({ error: "Failed to fetch Google Places" }, { status: 502 });
   }
