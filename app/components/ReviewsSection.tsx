@@ -28,9 +28,7 @@ type Props = {
 
 export function ReviewsSection({ placeId, mapsUrl, fallbackLabel }: Props) {
   const [data, setData] = useState<ReviewsResponse | null>(null);
-  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">(
-    placeId ? "loading" : "idle"
-  );
+  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">(placeId ? "loading" : "idle");
 
   useEffect(() => {
     if (!placeId) return;

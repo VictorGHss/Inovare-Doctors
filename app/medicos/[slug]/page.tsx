@@ -8,6 +8,7 @@ import { ActionButton } from "@/app/components/ActionButton";
 import { getClinicConfig, getDoctorBySlug, getDoctorSlugs, getGoogleInfo } from "@/lib/doctors";
 import { FiInstagram, FiMail, FiMapPin, FiPhone, FiFacebook } from "react-icons/fi";
 import { RiWhatsappLine } from "react-icons/ri";
+import { buildTelLink, buildWhatsappLink, displayLabel } from "@/lib/phone";
 
 export const dynamic = "force-static";
 
@@ -50,10 +51,6 @@ export async function generateMetadata({
     }
   };
 }
-
-const contactLabel = (value: string) => value.replace("https://", "").replace("http://", "");
-
-const sanitizeTel = (value: string) => value.replace(/[^\d+]/g, "");
 
 const SectionCard = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <AnimatedSection delay={0.05} className="section-card p-6">
@@ -135,16 +132,16 @@ export default async function DoctorPage({
             {whatsappList.map((phone) => (
               <ActionButton
                 key={`wa-${phone}`}
-                href={`https://wa.me/${sanitizeTel(phone)}?text=${whatsappMessage}`}
+                href={buildWhatsappLink(phone, whatsappMessage)}
                 icon={<RiWhatsappLine />}
                 variant="soft"
               >
-                WhatsApp
+                WhatsApp {displayLabel(phone)}
               </ActionButton>
             ))}
             {phoneList.map((phone) => (
-              <ActionButton key={`phone-${phone}`} href={`tel:${sanitizeTel(phone)}`} icon={<FiPhone />} variant="soft">
-                Telefone
+              <ActionButton key={`phone-${phone}`} href={buildTelLink(phone)} icon={<FiPhone />} variant="soft">
+                Telefone {displayLabel(phone)}
               </ActionButton>
             ))}
             {email ? (
