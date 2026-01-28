@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getClinicConfig } from "@/lib/doctors";
 
+export const runtime = "edge";
+
 type GoogleReview = {
   author_name: string;
   rating: number;
