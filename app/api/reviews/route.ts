@@ -68,7 +68,8 @@ export async function GET(req: Request) {
   const surnameTokens = (resolved.surnameTokens.length > 0 ? resolved.surnameTokens : surnameList).map(normalizeToken);
   const useSurnameFilter = resolved.useSurnameFilter && surnameTokens.length > 0;
   const isClinicFallback = resolved.sourceMode === "clinic" || effectivePlaceId === clinic.google.placeId;
-  const applySurnameFilter = useSurnameFilter && (isClinicFallback || resolved.sourceMode === "group");
+  // Por ora, filtro por sobrenome apenas para fontes de grupo; para fallback da clínica mantemos só o filtro de rating.
+  const applySurnameFilter = useSurnameFilter && resolved.sourceMode === "group";
 
   console.info(
     `reviews: handler=edge slug=${slugParam ?? "n/a"} placeIdProvided=${Boolean(placeIdParam)} clinicPlaceId=${Boolean(
