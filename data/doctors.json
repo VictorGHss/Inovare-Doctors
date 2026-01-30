@@ -20,7 +20,12 @@
       },
       "google": {
         "placeId": "ChIJN3Bz2lwa6JQRzi0rQrcYanw",
-        "mapsUrl": "https://share.google/JYhgFNv4A58Tz26VB"
+        "mapsUrl": "https://share.google/JYhgFNv4A58Tz26VB",
+        "reviewSource": {
+          "mode": "clinic",
+          "placeId": "ChIJN3Bz2lwa6JQRzi0rQrcYanw",
+          "surnameTokens": ["Vania", "Gulin"]
+        }
       },
       "photos": [
         "https://inovare.med.br/wp-content/uploads/2023/02/VANIA-DE-CASTRO_Easy-Resize.com_.jpg"
@@ -140,7 +145,14 @@
       },
       "photos": [
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROoqw8S76uUS0ZBrKmrDCnInUbeT1ieCl__Q&s"
-      ]
+      ],
+      "google": {
+        "reviewSource": {
+          "mode": "clinic",
+          "placeId": "ChIJN3Bz2lwa6JQRzi0rQrcYanw",
+          "surnameTokens": ["Gulin", "Joelson"]
+        }
+      }
     },
     {
       "slug": "cesar-toshio-oda",
