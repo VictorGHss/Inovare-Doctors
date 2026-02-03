@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const doctor = getDoctorBySlug(slug);
   const clinic = getClinicConfig();
-  const siteBaseUrl = process.env.SITE_BASE_URL || "https://medicos-test.ctrls.dev.br";
+  const siteBaseUrl = process.env.SITE_BASE_URL || "https://inovare.doctors.ctrls.dev.br";
 
   if (!doctor) {
     return {

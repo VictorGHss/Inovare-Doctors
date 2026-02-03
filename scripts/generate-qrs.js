@@ -9,7 +9,7 @@ const outDir = path.join(__dirname, "..", "qrcodes");
 const baseUrl =
   process.env.QR_BASE_URL ||
   process.env.SITE_BASE_URL ||
-  "https://medicos-test.ctrls.dev.br";
+  "https://inovare.doctors.ctrls.dev.br";
 
 async function main() {
   const raw = fs.readFileSync(dataPath, "utf8");

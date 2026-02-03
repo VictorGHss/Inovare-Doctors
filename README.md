@@ -42,7 +42,7 @@ Mini-site público para perfis de médicos (SSG) com rotas amigáveis e QR curto
 - `CLINIC_PLACE_ID` (fallback da clínica)
 - `MIN_REVIEW_RATING` (ex: `3.5`)
 - `REVIEW_SURNAMES` (ex: `Gulin,Zanetti,Oda`; usado só quando o placeId é o da clínica)
-- `SITE_BASE_URL` (ex: `https://medicos-test.ctrls.dev.br`)
+- `SITE_BASE_URL` (ex: `https://inovare.doctors.ctrls.dev.br`)
 - Opcional: `QR_BASE_URL`
 
 ## Deploy no Cloudflare Pages
@@ -57,8 +57,8 @@ Mini-site público para perfis de médicos (SSG) com rotas amigáveis e QR curto
 - Recomende exportar em SVG para impressão (melhor nitidez) e testar a leitura em dispositivos móveis antes de mandar para gráfica.
 
 ## Ambiente de teste (ctrls.dev.br)
-- Variáveis no Cloudflare Pages: `GOOGLE_PLACES_API_KEY`, `CLINIC_PLACE_ID`, `SITE_BASE_URL` (ex: `https://medicos-test.ctrls.dev.br`), opcional `QR_BASE_URL`.
-- `SITE_BASE_URL` e `QR_BASE_URL` têm fallback para `https://medicos-test.ctrls.dev.br`.
+- Variáveis no Cloudflare Pages: `GOOGLE_PLACES_API_KEY`, `CLINIC_PLACE_ID`, `SITE_BASE_URL` (ex: `https://inovare.doctors.ctrls.dev.br`), opcional `QR_BASE_URL`.
+- `SITE_BASE_URL` e `QR_BASE_URL` têm fallback para `https://inovare.doctors.ctrls.dev.br`.
 - Geração de QRs em SVG: `npm run qr:gen` (lê `data/doctors.json`, salva em `qrcodes/` e gera `qrcodes/index.csv`; cada QR aponta para `https://<BASE>/m/{slug}`).
 - API `/api/reviews` não funciona em `next dev`; use Pages ou `npx wrangler pages dev .vercel/output/static --compatibility-date=2024-07-01` após `npm run cf:build`.
 

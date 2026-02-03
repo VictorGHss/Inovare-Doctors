@@ -3,7 +3,7 @@ import "./globals.css";
 import { Manrope } from "next/font/google";
 
 const font = Manrope({ subsets: ["latin"], variable: "--font-display" });
-const siteBaseUrl = process.env.SITE_BASE_URL || "https://medicos-test.ctrls.dev.br";
+const siteBaseUrl = process.env.SITE_BASE_URL || "https://inovare.doctors.ctrls.dev.br";
 
 export const metadata: Metadata = {
   title: "Inovare – Médicos",
