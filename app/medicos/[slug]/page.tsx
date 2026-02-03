@@ -158,11 +158,22 @@ export default async function DoctorPage({
                 Facebook
               </ActionButton>
             ))}
-            {linksList.map((link) => (
-              <ActionButton key={link.url} href={link.url} variant="soft" external>
-                {link.label}
-              </ActionButton>
-            ))}
+            {linksList.map((link) => {
+              const label = link.label.toLowerCase();
+              const url = link.url.toLowerCase();
+              const icon =
+                label.includes("facebook") || url.includes("facebook.com")
+                  ? <FiFacebook />
+                  : label.includes("instagram") || url.includes("instagram.com")
+                    ? <FiInstagram />
+                    : undefined;
+
+              return (
+                <ActionButton key={link.url} href={link.url} variant="soft" external icon={icon}>
+                  {link.label}
+                </ActionButton>
+              );
+            })}
           </div>
         </SectionCard>
       ) : null}
