@@ -88,7 +88,7 @@ export default async function DoctorPage({
   const linksList = contacts?.links || [];
   const email = contacts?.email;
 
-  const whatsappMessage = `Olá, estou entrando em contato pelo link do qr code para agendar uma consulta com ${doctor?.name}.`;
+  const whatsappMessage = `Olá. Estou entrando em contato pelo link do qr code para agendar uma consulta com ${doctor?.name}.`;
   const hasContacts =
     whatsappList.length > 0 ||
     phoneList.length > 0 ||
