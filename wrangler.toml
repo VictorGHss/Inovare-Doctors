@@ -4,4 +4,4 @@ compatibility_date = "2024-03-20"
 compatibility_flags = ["nodejs_compat"]
 
 [vars]
-# CLINIC_PLACE_ID = "defina-o-place-id-da-clinica"
+# CLINIC_PLACE_ID = "ChIJN3Bz2lwa6JQRzi0rQrcYanw"
