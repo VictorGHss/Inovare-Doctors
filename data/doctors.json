@@ -564,6 +564,7 @@
           { "label": "Site", "url": "https://alexandreacuna.com.br/" }
         ]
       },
+
       "google": {
         "placeId": "ChIJFXJz2lwa6JQR5mp-2VacS8c",
         "mapsUrl": "https://share.google/2MIfipIyhc8oitEPh"
@@ -572,7 +573,19 @@
         "https://inovare.med.br/wp-content/uploads/2023/02/Alexandre.jpg_Easy-Resize.com_.jpg",
         "https://yt3.googleusercontent.com/ytc/AIdro_kXRgUy4xJBpN62ISNcbgBfLWoQ1sOJnwUrq6_dDEsqGic=s900-c-k-c0x00ffffff-no-rj"
       ]
+    },
+        {
+      "slug": "carlos-koga",
+      "name": "Dr. Carlos Koga",
+      "specialties": ["Urologia", "Cirurgia Robótica"],
+      "bio": "Graduação em Medicina e residências em Cirurgia Geral e Urologia pela FAMEMA. Possui certificação em cirurgia Robótica (Intuitive da Vinci). Membro do corpo clínico do Hospital Nossa Senhora das Graças (Curitiba). Atuante em Urologia Clínica e Cirúrgica, endourologia, Urologia Minimamente Invasiva, Uro-oncologia, Laparoscopia e Robótica.",
+      "contacts": {
+        "instagram": ["https://www.instagram.com/carlosheidikoga"],
+        "whatsapp": ["(42) 3026-2601"]
+      },
+      "photos": [
+        "https://uropg.s3.sa-east-1.amazonaws.com/images/medics/2_tl2hVsQV49Aa0Jl.png"
+      ]
     }
   ]
 }
-
