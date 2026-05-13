@@ -577,25 +577,21 @@
         {
       "slug": "carlos-koga",
       "name": "Dr. Carlos Koga",
-      "crm": "CRM – [Inserir Número] / RQE: [Inserir]",
+      "crm": "CRM – 15982 / RQE: 14787",
       "specialties": ["Urologia", "Cirurgia Robótica"],
       "bio": "Graduação em Medicina e residências em Cirurgia Geral e Urologia pela FAMEMA. Possui certificação em cirurgia Robótica (Intuitive da Vinci). Membro do corpo clínico do Hospital Nossa Senhora das Graças (Curitiba). Atuante em Urologia Clínica e Cirúrgica, endourologia, Urologia Minimamente Invasiva, Uro-oncologia, Laparoscopia e Robótica.",
       "contacts": {
         "instagram": ["https://www.instagram.com/carlosheidikoga"],
-        "whatsapp": ["(42) 3026-2601"]
+        "whatsapp": ["(42) 3026-2601"],
+        "phones": ["(42) 3026-2650"]
+      },
+            "google": {
+        "placeId": "ChIJ51J6mhUa6JQRNypFNmE2No0",
+        "mapsUrl": "https://share.google/4ulr0iRUHUzADc7QD"
       },
       "photos": [
         "https://uropg.s3.sa-east-1.amazonaws.com/images/medics/2_tl2hVsQV49Aa0Jl.png"
-      ],
-      "google": {
-        "placeId": "ChIJN3Bz2lwa6JQRzi0rQrcYanw",
-        "mapsUrl": "https://share.google/JYhgFNv4A58Tz26VB",
-        "reviewSource": {
-          "mode": "clinic",
-          "placeId": "ChIJN3Bz2lwa6JQRzi0rQrcYanw",
-          "surnameTokens": ["Koga"]
-        }
-      }
+      ]
     }
   ]
 }
