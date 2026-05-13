@@ -1,5 +1,7 @@
 name = "inovare-medicos"
 pages_build_output_dir = ".vercel/output/static"
+compatibility_date = "2024-03-20"
+compatibility_flags = ["nodejs_compat"]
 
 [vars]
 # CLINIC_PLACE_ID = "defina-o-place-id-da-clinica"
