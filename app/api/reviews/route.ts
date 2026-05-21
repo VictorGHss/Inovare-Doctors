@@ -101,10 +101,23 @@ export async function GET(req: Request) {
       "|"
     )}&limit=${limit}&offset=${offset}&slug=${slugParam ?? ""}`
   );
-  const cache = (caches as unknown as { default?: Cache }).default;
+  
+  let cache: any = undefined;
+  try {
+    if (typeof caches !== "undefined" && (caches as any).default) {
+      cache = (caches as any).default;
+    }
+  } catch (e) {
+    console.warn("Cache storage is not available in this environment:", e);
+  }
+
   if (cache) {
-    const cached = await cache.match(cacheKey);
-    if (cached) return cached;
+    try {
+      const cached = await cache.match(cacheKey);
+      if (cached) return cached;
+    } catch (e) {
+      console.warn("Failed to retrieve from cache:", e);
+    }
   }
 
   try {
@@ -209,7 +222,11 @@ export async function GET(req: Request) {
     });
 
     if (cache) {
-      await cache.put(cacheKey, response.clone());
+      try {
+        await cache.put(cacheKey, response.clone());
+      } catch (e) {
+        console.warn("Failed to write to cache:", e);
+      }
     }
 
     return response;

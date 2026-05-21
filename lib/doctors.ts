@@ -1,7 +1,7 @@
-import doctorsData from "../data/doctors.json";
+import { doctorsData } from "../data/doctors";
 import type { ClinicConfig, Doctor, DoctorsData, GoogleInfo } from "@/types/doctor";
 
-const data = doctorsData as DoctorsData;
+const data = doctorsData;
 
 export const getClinicConfig = (): ClinicConfig => data.clinic;
 
