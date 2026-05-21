@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { getClinicConfig, getDoctorBySlug, getDoctors } from "@/lib/doctors";
 import { resolveReviewConfig } from "@/lib/reviewSources";
 import { getEnv } from "@/lib/env";
@@ -100,9 +99,9 @@ export async function GET(req: Request) {
     }
 
     if (slugParam && !doctor) {
-      return NextResponse.json(
-        { error: "Doctor not found" },
-        { status: 404, headers: { "x-reviews-handler": "next-route" } }
+      return new Response(
+        JSON.stringify({ error: "Doctor not found" }),
+        { status: 404, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
       );
     }
 
@@ -132,8 +131,8 @@ export async function GET(req: Request) {
 
     // If no Doctoralia link is available for the doctor, return empty payload gracefully
     if (!doctoraliaUrl) {
-      return NextResponse.json(
-        {
+      return new Response(
+        JSON.stringify({
           rating: null,
           user_ratings_total: 0,
           url: undefined,
@@ -142,7 +141,7 @@ export async function GET(req: Request) {
           totalAfterFilter: 0,
           nextOffset: null,
           displayLabel: resolved.displayLabel ?? "Avaliações do Doctoralia"
-        },
+        }),
         {
           status: 200,
           headers: {
@@ -181,9 +180,9 @@ export async function GET(req: Request) {
     const doctoraliaData = await fetchDoctoraliaReviews(doctoraliaUrl);
 
     if (!doctoraliaData) {
-      return NextResponse.json(
-        { error: "Failed to fetch Doctoralia reviews" },
-        { status: 502, headers: { "x-reviews-handler": "next-route" } }
+      return new Response(
+        JSON.stringify({ error: "Failed to fetch Doctoralia reviews" }),
+        { status: 502, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
       );
     }
 
@@ -208,7 +207,7 @@ export async function GET(req: Request) {
       displayLabel: resolved.displayLabel ?? "Avaliações do Doctoralia"
     };
 
-    const response = new NextResponse(JSON.stringify(payload), {
+    const response = new Response(JSON.stringify(payload), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
@@ -229,12 +228,12 @@ export async function GET(req: Request) {
     return response;
   } catch (err: any) {
     console.error("reviews: unexpected error in doctoralia route handler", err);
-    return NextResponse.json(
-      {
+    return new Response(
+      JSON.stringify({
         error: "Unexpected error fetching reviews",
         message: err instanceof Error ? err.message : String(err),
         stack: err instanceof Error ? err.stack : undefined
-      },
+      }),
       { status: 500, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
     );
   }
