@@ -25,102 +25,102 @@ type GoogleResponse = {
 const CACHE_TTL = 60 * 60 * 6; // 6 horas
 
 export async function GET(req: Request) {
-  const url = new URL(req.url);
-  const placeIdParam = url.searchParams.get("placeId");
-  const slugParam = url.searchParams.get("slug");
-  const limitParam = Number(url.searchParams.get("limit") ?? "3");
-  const offsetParam = Number(url.searchParams.get("offset") ?? "0");
-
-  const clinic = getClinicConfig();
-  const doctor = slugParam ? getDoctorBySlug(slugParam) : undefined;
-  if (slugParam && !doctor) {
-    return NextResponse.json(
-      { error: "Doctor not found" },
-      { status: 404, headers: { "x-reviews-handler": "next-route" } }
-    );
-  }
-
-  const resolved = doctor
-    ? resolveReviewConfig(doctor, clinic)
-    : {
-        placeId: placeIdParam || clinic.google.placeId || "",
-        minRating: Number(process.env.MIN_REVIEW_RATING ?? "3.5"),
-        surnameTokens: [],
-        useSurnameFilter: false,
-        displayLabel: undefined,
-        sourceMode: placeIdParam ? "individual" : "clinic"
-      };
-  const effectivePlaceId = placeIdParam || resolved.placeId;
-  const minRating = resolved.minRating;
-  const limit = Number.isFinite(limitParam) && limitParam > 0 ? Math.min(limitParam, 20) : 3;
-  const offset = Number.isFinite(offsetParam) && offsetParam >= 0 ? offsetParam : 0;
-  const surnamesRaw = (process.env.REVIEW_SURNAMES || process.env.REVIEW_SURNAME || "").trim();
-  const surnameList = surnamesRaw
-    .split(",")
-    .map((s) => s.trim().toLowerCase())
-    .filter(Boolean);
-  const normalizeToken = (token: string) =>
-    token
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .trim()
-      .toLowerCase();
-  const surnameTokens = (resolved.surnameTokens.length > 0 ? resolved.surnameTokens : surnameList).map(normalizeToken);
-  const useSurnameFilter = resolved.useSurnameFilter && surnameTokens.length > 0;
-  const isClinicFallback = resolved.sourceMode === "clinic" || effectivePlaceId === clinic.google.placeId;
-  // Por ora, filtro por sobrenome apenas para fontes de grupo; para fallback da clínica mantemos só o filtro de rating.
-  const applySurnameFilter = useSurnameFilter && resolved.sourceMode === "group";
-
-  console.info(
-    `reviews: handler=edge slug=${slugParam ?? "n/a"} placeIdProvided=${Boolean(placeIdParam)} clinicPlaceId=${Boolean(
-      clinic.google.placeId
-    )} apiKeyPresent=${Boolean(process.env.GOOGLE_PLACES_API_KEY)} minRating=${minRating} surnames=${
-      surnameTokens.length
-    } isClinicFallback=${isClinicFallback}`
-  );
-
-  if (!effectivePlaceId) {
-    console.error("reviews: missing placeId and clinic fallback");
-    return NextResponse.json(
-      { error: "Missing placeId" },
-      { status: 400, headers: { "x-reviews-handler": "next-route" } }
-    );
-  }
-
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  if (!apiKey) {
-    console.error("reviews: GOOGLE_PLACES_API_KEY not set");
-    return NextResponse.json(
-      { error: "Missing Google Places API key" },
-      { status: 500, headers: { "x-reviews-handler": "next-route" } }
-    );
-  }
-
-  const cacheKey = new Request(
-    `${url.origin}/api/reviews?placeId=${effectivePlaceId}&minRating=${minRating}&surnames=${surnameTokens.join(
-      "|"
-    )}&limit=${limit}&offset=${offset}&slug=${slugParam ?? ""}`
-  );
-  
-  let cache: any = undefined;
   try {
-    if (typeof caches !== "undefined" && (caches as any).default) {
-      cache = (caches as any).default;
-    }
-  } catch (e) {
-    console.warn("Cache storage is not available in this environment:", e);
-  }
+    const url = new URL(req.url);
+    const placeIdParam = url.searchParams.get("placeId");
+    const slugParam = url.searchParams.get("slug");
+    const limitParam = Number(url.searchParams.get("limit") ?? "3");
+    const offsetParam = Number(url.searchParams.get("offset") ?? "0");
 
-  if (cache) {
+    const clinic = getClinicConfig();
+    const doctor = slugParam ? getDoctorBySlug(slugParam) : undefined;
+    if (slugParam && !doctor) {
+      return NextResponse.json(
+        { error: "Doctor not found" },
+        { status: 404, headers: { "x-reviews-handler": "next-route" } }
+      );
+    }
+
+    const resolved = doctor
+      ? resolveReviewConfig(doctor, clinic)
+      : {
+          placeId: placeIdParam || clinic.google.placeId || "",
+          minRating: Number(process.env.MIN_REVIEW_RATING ?? "3.5"),
+          surnameTokens: [],
+          useSurnameFilter: false,
+          displayLabel: undefined,
+          sourceMode: placeIdParam ? "individual" : "clinic"
+        };
+    const effectivePlaceId = placeIdParam || resolved.placeId;
+    const minRating = resolved.minRating;
+    const limit = Number.isFinite(limitParam) && limitParam > 0 ? Math.min(limitParam, 20) : 3;
+    const offset = Number.isFinite(offsetParam) && offsetParam >= 0 ? offsetParam : 0;
+    const surnamesRaw = (process.env.REVIEW_SURNAMES || process.env.REVIEW_SURNAME || "").trim();
+    const surnameList = surnamesRaw
+      .split(",")
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+    const normalizeToken = (token: string) =>
+      token
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim()
+        .toLowerCase();
+    const surnameTokens = (resolved.surnameTokens.length > 0 ? resolved.surnameTokens : surnameList).map(normalizeToken);
+    const useSurnameFilter = resolved.useSurnameFilter && surnameTokens.length > 0;
+    const isClinicFallback = resolved.sourceMode === "clinic" || effectivePlaceId === clinic.google.placeId;
+    // Por ora, filtro por sobrenome apenas para fontes de grupo; para fallback da clínica mantemos só o filtro de rating.
+    const applySurnameFilter = useSurnameFilter && resolved.sourceMode === "group";
+
+    console.info(
+      `reviews: handler=edge slug=${slugParam ?? "n/a"} placeIdProvided=${Boolean(placeIdParam)} clinicPlaceId=${Boolean(
+        clinic.google.placeId
+      )} apiKeyPresent=${Boolean(process.env.GOOGLE_PLACES_API_KEY)} minRating=${minRating} surnames=${
+        surnameTokens.length
+      } isClinicFallback=${isClinicFallback}`
+    );
+
+    if (!effectivePlaceId) {
+      console.error("reviews: missing placeId and clinic fallback");
+      return NextResponse.json(
+        { error: "Missing placeId" },
+        { status: 400, headers: { "x-reviews-handler": "next-route" } }
+      );
+    }
+
+    const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+    if (!apiKey) {
+      console.error("reviews: GOOGLE_PLACES_API_KEY not set");
+      return NextResponse.json(
+        { error: "Missing Google Places API key" },
+        { status: 500, headers: { "x-reviews-handler": "next-route" } }
+      );
+    }
+
+    const cacheKey = new Request(
+      `${url.origin}/api/reviews?placeId=${effectivePlaceId}&minRating=${minRating}&surnames=${surnameTokens.join(
+        "|"
+      )}&limit=${limit}&offset=${offset}&slug=${slugParam ?? ""}`
+    );
+    
+    let cache: any = undefined;
     try {
-      const cached = await cache.match(cacheKey);
-      if (cached) return cached;
+      if (typeof caches !== "undefined" && (caches as any).default) {
+        cache = (caches as any).default;
+      }
     } catch (e) {
-      console.warn("Failed to retrieve from cache:", e);
+      console.warn("Cache storage is not available in this environment:", e);
     }
-  }
 
-  try {
+    if (cache) {
+      try {
+        const cached = await cache.match(cacheKey);
+        if (cached) return cached;
+      } catch (e) {
+        console.warn("Failed to retrieve from cache:", e);
+      }
+    }
+
     const googleUrl = new URL("https://maps.googleapis.com/maps/api/place/details/json");
     googleUrl.searchParams.set("place_id", effectivePlaceId);
     googleUrl.searchParams.set("key", apiKey);
@@ -230,10 +230,14 @@ export async function GET(req: Request) {
     }
 
     return response;
-  } catch (err) {
+  } catch (err: any) {
     console.error("reviews: unexpected error", err);
     return NextResponse.json(
-      { error: "Unexpected error fetching reviews" },
+      {
+        error: "Unexpected error fetching reviews",
+        message: err instanceof Error ? err.message : String(err),
+        stack: err instanceof Error ? err.stack : undefined
+      },
       { status: 500, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
     );
   }
