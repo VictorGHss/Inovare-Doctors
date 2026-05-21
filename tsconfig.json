@@ -23,7 +23,6 @@
       "@cloudflare/workers-types",
       "@cloudflare/workers-types/experimental"
     ],
-    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
