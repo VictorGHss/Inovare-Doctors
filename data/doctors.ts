@@ -90,7 +90,10 @@ export const doctorsData: DoctorsData = {
       contacts: {
         instagram: ["https://www.instagram.com/carlosheidikoga"],
         whatsapp: ["(42) 3026-2601"],
-        phones: ["(42) 3026-2650"]
+        phones: ["(42) 3026-2650"],
+        links: [
+          { "label": "Doctoralia", "url": "https://www.doctoralia.com.br/carlos-koga/urologista/ponta-grossa" }
+        ]
       },
       google: {
         placeId: "ChIJ51J6mhUa6JQRNypFNmE2No0",

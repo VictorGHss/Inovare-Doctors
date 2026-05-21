@@ -75,7 +75,7 @@ export function ReviewsSection({ slug, placeId, mapsUrl, fallbackLabel }: Props)
 
   const fallbackMapsUrl =
     mapsUrl || (placeId ? `https://www.google.com/maps/search/?api=1&query=place_id:${placeId}` : undefined);
-  const urlToGoogle = data?.url || fallbackMapsUrl;
+  const urlToShow = data?.url || fallbackMapsUrl;
   const labelToShow = fallbackLabel || data?.displayLabel;
 
   const handleLoadMore = async () => {
@@ -107,6 +107,10 @@ export function ReviewsSection({ slug, placeId, mapsUrl, fallbackLabel }: Props)
     return null;
   }
 
+  if (status === "ready" && reviews.length === 0 && (!data?.url || !data?.url.includes("doctoralia.com.br"))) {
+    return null;
+  }
+
   return (
     <AnimatedSection delay={0.05}>
       <div className="section-card p-6">
@@ -115,9 +119,13 @@ export function ReviewsSection({ slug, placeId, mapsUrl, fallbackLabel }: Props)
             <p className="text-xs uppercase tracking-wide text-amber-800">Avaliações</p>
             {labelToShow && <p className="text-sm text-gray-600">{labelToShow}</p>}
           </div>
-          {urlToGoogle && (
-            <ActionButton href={urlToGoogle} variant="primary" icon={urlToGoogle.includes("maps") ? <FiMapPin /> : <FiExternalLink />}>
-              Ver no Google
+          {urlToShow && (
+            <ActionButton
+              href={urlToShow}
+              variant="primary"
+              icon={urlToShow.includes("doctoralia.com.br") ? <FiExternalLink /> : urlToShow.includes("maps") ? <FiMapPin /> : <FiExternalLink />}
+            >
+              {urlToShow.includes("doctoralia.com.br") ? "Ver no Doctoralia" : "Ver no Google"}
             </ActionButton>
           )}
         </div>

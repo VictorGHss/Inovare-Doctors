@@ -38,10 +38,7 @@ Mini-site público para perfis de médicos (SSG) com rotas amigáveis e QR curto
 - Em `next dev` o endpoint `/api/reviews` não roda; use Cloudflare Pages (deploy) ou `npx wrangler pages dev .vercel/output/static --compatibility-date=2024-07-01` após `npm run cf:build` para testar.
 
 ### Variáveis de ambiente (Cloudflare Pages/Workers)
-- `GOOGLE_PLACES_API_KEY` (Google Places Details; chave de servidor, sem restrição por referrer)
-- `CLINIC_PLACE_ID` (fallback da clínica)
 - `MIN_REVIEW_RATING` (ex: `3.5`)
-- `REVIEW_SURNAMES` (ex: `Gulin,Zanetti,Oda`; usado só quando o placeId é o da clínica)
 - `SITE_BASE_URL` (ex: `https://inovare.doctors.ctrls.dev.br`)
 - Opcional: `QR_BASE_URL`
 
@@ -49,7 +46,6 @@ Mini-site público para perfis de médicos (SSG) com rotas amigáveis e QR curto
 - Repositório conectado ao GitHub.
 - Build command: `npm run cf:build`
 - Output directory: `.vercel/output/static`
-- Functions: `functions/` (já no repositório; inclui `/api/reviews`).
 - Domínio: configure `medicos.inovare.med.br` como custom domain no Pages e mantenha DNS no Cloudflare.
 
 ## QR Codes
@@ -57,10 +53,11 @@ Mini-site público para perfis de médicos (SSG) com rotas amigáveis e QR curto
 - Recomende exportar em SVG para impressão (melhor nitidez) e testar a leitura em dispositivos móveis antes de mandar para gráfica.
 
 ## Ambiente de teste (ctrls.dev.br)
-- Variáveis no Cloudflare Pages: `GOOGLE_PLACES_API_KEY`, `CLINIC_PLACE_ID`, `SITE_BASE_URL` (ex: `https://inovare.doctors.ctrls.dev.br`), opcional `QR_BASE_URL`.
+- Variáveis no Cloudflare Pages: `SITE_BASE_URL` (ex: `https://inovare.doctors.ctrls.dev.br`), opcional `QR_BASE_URL`.
 - `SITE_BASE_URL` e `QR_BASE_URL` têm fallback para `https://inovare.doctors.ctrls.dev.br`.
 - Geração de QRs em SVG: `npm run qr:gen` (lê `data/doctors.json`, salva em `qrcodes/` e gera `qrcodes/index.csv`; cada QR aponta para `https://<BASE>/m/{slug}`).
-- API `/api/reviews` não funciona em `next dev`; use Pages ou `npx wrangler pages dev .vercel/output/static --compatibility-date=2024-07-01` após `npm run cf:build`.
+- API `/api/reviews` busca e faz o parse das avaliações do Doctoralia na borda (Edge runtime) usando expressões regulares eficientes.
+- O endpoint `/api/reviews` não roda em `next dev`; use Pages ou `npx wrangler pages dev .vercel/output/static --compatibility-date=2024-07-01` após `npm run cf:build`.
 
 ## Personalização de identidade
 - Cores: primária `#f5ab4d`, secundária `#fad5aa` (definidas no Tailwind).

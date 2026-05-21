@@ -1,30 +1,87 @@
 import { NextResponse } from "next/server";
-import { getClinicConfig, getDoctorBySlug } from "@/lib/doctors";
+import { getClinicConfig, getDoctorBySlug, getDoctors } from "@/lib/doctors";
 import { resolveReviewConfig } from "@/lib/reviewSources";
 import { getEnv } from "@/lib/env";
 
-
 export const runtime = "edge";
 
-type GoogleReview = {
+const CACHE_TTL = 60 * 60 * 6; // 6 hours cache
+
+type Review = {
   author_name: string;
   rating: number;
   text?: string;
   relative_time_description?: string;
 };
 
-type GoogleResponse = {
-  status: string;
-  error_message?: string;
-  result?: {
-    rating?: number;
-    user_ratings_total?: number;
-    url?: string;
-    reviews?: GoogleReview[];
-  };
+type DoctoraliaData = {
+  rating: number | null;
+  user_ratings_total: number;
+  reviews: Review[];
 };
 
-const CACHE_TTL = 60 * 60 * 6; // 6 horas
+// Helper function to fetch and scrape Doctoralia reviews
+async function fetchDoctoraliaReviews(doctoraliaUrl: string): Promise<DoctoraliaData | null> {
+  try {
+    const response = await fetch(doctoraliaUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8"
+      }
+    });
+
+    if (!response.ok) {
+      console.error(`reviews: fetch failed for ${doctoraliaUrl} with status ${response.status}`);
+      return null;
+    }
+
+    const html = await response.text();
+
+    // 1. Extract Overall Rating & Review Count
+    const ratingValueMatch = html.match(/itemprop="ratingValue"\s+content="([\d.]+)"/) || html.match(/content="([\d.]+)"\s+itemprop="ratingValue"/);
+    const reviewCountMatch = html.match(/itemprop="reviewCount"\s+content="(\d+)"/) || html.match(/content="(\d+)"\s+itemprop="reviewCount"/);
+    
+    const user_ratings_total = reviewCountMatch ? Number(reviewCountMatch[1]) : 0;
+    const rating = user_ratings_total > 0 && ratingValueMatch ? Number(ratingValueMatch[1]) : null;
+
+    // 2. Extract Individual Reviews
+    const reviews: Review[] = [];
+    const reviewBlockRegex = /itemprop="review"\s+itemscope\s+itemtype="http:\/\/schema\.org\/Review"[\s\S]*?itemprop="reviewBody"[\s\S]*?<\/p>/gi;
+    
+    let match;
+    while ((match = reviewBlockRegex.exec(html)) !== null) {
+      const block = match[0];
+      
+      const authorMatch = block.match(/itemprop="name"[^>]*>\s*([^<]+?)\s*<\/span>/i);
+      const author = authorMatch ? authorMatch[1].trim() : "Paciente";
+      
+      const scoreMatch = block.match(/data-score="(\d+)"/i) || block.match(/content="(\d+)"\s+itemprop="ratingValue"/i);
+      const reviewRating = scoreMatch ? Number(scoreMatch[1]) : 5;
+      
+      const bodyMatch = block.match(/itemprop="reviewBody"[^>]*>\s*([\s\S]+?)\s*<\/p>/i);
+      const text = bodyMatch ? bodyMatch[1].trim().replace(/\s+/g, ' ') : "";
+      
+      const dateMatch = block.match(/<time[^>]*>([^<]+)<\/time>/i);
+      const relativeTime = dateMatch ? dateMatch[1].trim() : "Recentemente";
+      
+      reviews.push({
+        author_name: author,
+        rating: reviewRating,
+        text,
+        relative_time_description: relativeTime
+      });
+    }
+
+    return {
+      rating,
+      user_ratings_total,
+      reviews
+    };
+  } catch (error) {
+    console.error(`reviews: failed to fetch or parse doctoralia reviews for URL ${doctoraliaUrl}:`, error);
+    return null;
+  }
+}
 
 export async function GET(req: Request) {
   try {
@@ -35,7 +92,13 @@ export async function GET(req: Request) {
     const offsetParam = Number(url.searchParams.get("offset") ?? "0");
 
     const clinic = getClinicConfig();
-    const doctor = slugParam ? getDoctorBySlug(slugParam) : undefined;
+    
+    // Find doctor by slug or placeId
+    let doctor = slugParam ? getDoctorBySlug(slugParam) : undefined;
+    if (!doctor && placeIdParam) {
+      doctor = getDoctors().find((d) => d.google?.placeId === placeIdParam);
+    }
+
     if (slugParam && !doctor) {
       return NextResponse.json(
         { error: "Doctor not found" },
@@ -50,59 +113,50 @@ export async function GET(req: Request) {
           minRating: Number(getEnv("MIN_REVIEW_RATING") ?? "3.5"),
           surnameTokens: [],
           useSurnameFilter: false,
-          displayLabel: undefined,
-          sourceMode: placeIdParam ? "individual" : "clinic"
+          displayLabel: "Avaliações do Doctoralia",
+          sourceMode: "clinic" as const
         };
-    const effectivePlaceId = placeIdParam || resolved.placeId;
+
     const minRating = resolved.minRating;
     const limit = Number.isFinite(limitParam) && limitParam > 0 ? Math.min(limitParam, 20) : 3;
     const offset = Number.isFinite(offsetParam) && offsetParam >= 0 ? offsetParam : 0;
-    const surnamesRaw = (getEnv("REVIEW_SURNAMES") || getEnv("REVIEW_SURNAME") || "").trim();
-    const surnameList = surnamesRaw
-      .split(",")
-      .map((s) => s.trim().toLowerCase())
-      .filter(Boolean);
-    const normalizeToken = (token: string) =>
-      token
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .trim()
-        .toLowerCase();
-    const surnameTokens = (resolved.surnameTokens.length > 0 ? resolved.surnameTokens : surnameList).map(normalizeToken);
-    const useSurnameFilter = resolved.useSurnameFilter && surnameTokens.length > 0;
-    const isClinicFallback = resolved.sourceMode === "clinic" || effectivePlaceId === clinic.google.placeId;
-    // Por ora, filtro por sobrenome apenas para fontes de grupo; para fallback da clínica mantemos só o filtro de rating.
-    const applySurnameFilter = useSurnameFilter && resolved.sourceMode === "group";
+
+    // Search for a Doctoralia link in the doctor's links
+    const doctoraliaUrl = doctor?.contacts?.links?.find((l) =>
+      l.url.toLowerCase().includes("doctoralia.com.br")
+    )?.url;
 
     console.info(
-      `reviews: handler=edge slug=${slugParam ?? "n/a"} placeIdProvided=${Boolean(placeIdParam)} clinicPlaceId=${Boolean(
-        clinic.google.placeId
-      )} apiKeyPresent=${Boolean(getEnv("GOOGLE_PLACES_API_KEY"))} minRating=${minRating} surnames=${
-        surnameTokens.length
-      } isClinicFallback=${isClinicFallback}`
+      `reviews: handler=doctoralia slug=${slugParam ?? "n/a"} doctoraliaUrl=${doctoraliaUrl ?? "none"} minRating=${minRating}`
     );
 
-    if (!effectivePlaceId) {
-      console.error("reviews: missing placeId and clinic fallback");
+    // If no Doctoralia link is available for the doctor, return empty payload gracefully
+    if (!doctoraliaUrl) {
       return NextResponse.json(
-        { error: "Missing placeId" },
-        { status: 400, headers: { "x-reviews-handler": "next-route" } }
-      );
-    }
-
-    const apiKey = getEnv("GOOGLE_PLACES_API_KEY");
-    if (!apiKey) {
-      console.error("reviews: GOOGLE_PLACES_API_KEY not set");
-      return NextResponse.json(
-        { error: "Missing Google Places API key" },
-        { status: 500, headers: { "x-reviews-handler": "next-route" } }
+        {
+          rating: null,
+          user_ratings_total: 0,
+          url: undefined,
+          reviews: [],
+          returned: 0,
+          totalAfterFilter: 0,
+          nextOffset: null,
+          displayLabel: resolved.displayLabel ?? "Avaliações do Doctoralia"
+        },
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": `public, max-age=${CACHE_TTL}`,
+            "Access-Control-Allow-Origin": "*",
+            "x-reviews-handler": "next-route"
+          }
+        }
       );
     }
 
     const cacheKey = new Request(
-      `${url.origin}/api/reviews?placeId=${effectivePlaceId}&minRating=${minRating}&surnames=${surnameTokens.join(
-        "|"
-      )}&limit=${limit}&offset=${offset}&slug=${slugParam ?? ""}`
+      `${url.origin}/api/reviews?slug=${slugParam ?? ""}&limit=${limit}&offset=${offset}&minRating=${minRating}`
     );
     
     let cache: any = undefined;
@@ -123,94 +177,35 @@ export async function GET(req: Request) {
       }
     }
 
-    const googleUrl = new URL("https://maps.googleapis.com/maps/api/place/details/json");
-    googleUrl.searchParams.set("place_id", effectivePlaceId);
-    googleUrl.searchParams.set("key", apiKey);
-    googleUrl.searchParams.set("fields", "rating,user_ratings_total,reviews,url");
-    googleUrl.searchParams.set("reviews_no_translations", "true");
+    // Fetch and parse the Doctoralia reviews
+    const doctoraliaData = await fetchDoctoraliaReviews(doctoraliaUrl);
 
-    const googleResponse = await fetch(googleUrl.toString());
-
-    if (!googleResponse.ok) {
-      console.error(`reviews: google fetch failed status=${googleResponse.status}`);
-      return NextResponse.json({ error: "Failed to fetch Google Places" }, { status: 502 });
-    }
-
-    const googleJson = (await googleResponse.json()) as GoogleResponse;
-
-    if (googleJson.status !== "OK" || !googleJson.result) {
-      // Log detailed error to help diagnose (billing, key restriction, etc.)
-      console.error(
-        `reviews: invalid google response status=${googleJson.status} message=${googleJson.error_message ?? "n/a"}`
-      );
-
-      if (googleJson.status === "REQUEST_DENIED") {
-        return NextResponse.json(
-          {
-            error: "REQUEST_DENIED",
-            status: googleJson.status,
-            error_message: googleJson.error_message ?? "Request denied by Google Places"
-          },
-          { status: 403, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
-        );
-      }
-
-      if (googleJson.status === "ZERO_RESULTS") {
-        return NextResponse.json(
-          {
-            rating: null,
-            user_ratings_total: 0,
-            reviews: [],
-            url: googleJson.result?.url,
-            displayLabel: resolved.displayLabel
-          },
-          { status: 200, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
-        );
-      }
-
+    if (!doctoraliaData) {
       return NextResponse.json(
-        {
-          error: "Invalid Google response",
-          status: googleJson.status,
-          error_message: googleJson.error_message
-        },
-        { status: 502, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
+        { error: "Failed to fetch Doctoralia reviews" },
+        { status: 502, headers: { "x-reviews-handler": "next-route" } }
       );
     }
 
-    const filteredReviews = (googleJson.result.reviews || [])
+    const filteredReviews = doctoraliaData.reviews
       .filter((review) => {
         if (typeof review.rating === "number" && review.rating < minRating) return false;
-        if (applySurnameFilter) {
-          const text = (review.text || "")
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase();
-          if (!text) return false;
-          return surnameTokens.some((sn) => text.includes(sn));
-        }
         return true;
-      })
-      .map((review) => ({
-        author_name: review.author_name,
-        rating: review.rating,
-        text: review.text,
-        relative_time_description: review.relative_time_description
-      }));
+      });
 
     const totalAfterFilter = filteredReviews.length;
     const paged = filteredReviews.slice(offset, offset + limit);
     const nextOffset = offset + limit < totalAfterFilter ? offset + limit : null;
 
     const payload = {
-      rating: googleJson.result.rating,
-      user_ratings_total: googleJson.result.user_ratings_total,
-      url: googleJson.result.url,
+      rating: doctoraliaData.rating,
+      user_ratings_total: doctoraliaData.user_ratings_total,
+      url: doctoraliaUrl,
       reviews: paged,
       returned: paged.length,
       totalAfterFilter,
       nextOffset,
-      displayLabel: resolved.displayLabel
+      displayLabel: resolved.displayLabel ?? "Avaliações do Doctoralia"
     };
 
     const response = new NextResponse(JSON.stringify(payload), {
@@ -233,7 +228,7 @@ export async function GET(req: Request) {
 
     return response;
   } catch (err: any) {
-    console.error("reviews: unexpected error", err);
+    console.error("reviews: unexpected error in doctoralia route handler", err);
     return NextResponse.json(
       {
         error: "Unexpected error fetching reviews",
