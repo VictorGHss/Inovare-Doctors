@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getClinicConfig, getDoctorBySlug } from "@/lib/doctors";
 import { resolveReviewConfig } from "@/lib/reviewSources";
+import { getEnv } from "@/lib/env";
+
 
 export const runtime = "edge";
 
@@ -45,7 +47,7 @@ export async function GET(req: Request) {
       ? resolveReviewConfig(doctor, clinic)
       : {
           placeId: placeIdParam || clinic.google.placeId || "",
-          minRating: Number(process.env.MIN_REVIEW_RATING ?? "3.5"),
+          minRating: Number(getEnv("MIN_REVIEW_RATING") ?? "3.5"),
           surnameTokens: [],
           useSurnameFilter: false,
           displayLabel: undefined,
@@ -55,7 +57,7 @@ export async function GET(req: Request) {
     const minRating = resolved.minRating;
     const limit = Number.isFinite(limitParam) && limitParam > 0 ? Math.min(limitParam, 20) : 3;
     const offset = Number.isFinite(offsetParam) && offsetParam >= 0 ? offsetParam : 0;
-    const surnamesRaw = (process.env.REVIEW_SURNAMES || process.env.REVIEW_SURNAME || "").trim();
+    const surnamesRaw = (getEnv("REVIEW_SURNAMES") || getEnv("REVIEW_SURNAME") || "").trim();
     const surnameList = surnamesRaw
       .split(",")
       .map((s) => s.trim().toLowerCase())
@@ -75,7 +77,7 @@ export async function GET(req: Request) {
     console.info(
       `reviews: handler=edge slug=${slugParam ?? "n/a"} placeIdProvided=${Boolean(placeIdParam)} clinicPlaceId=${Boolean(
         clinic.google.placeId
-      )} apiKeyPresent=${Boolean(process.env.GOOGLE_PLACES_API_KEY)} minRating=${minRating} surnames=${
+      )} apiKeyPresent=${Boolean(getEnv("GOOGLE_PLACES_API_KEY"))} minRating=${minRating} surnames=${
         surnameTokens.length
       } isClinicFallback=${isClinicFallback}`
     );
@@ -88,7 +90,7 @@ export async function GET(req: Request) {
       );
     }
 
-    const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+    const apiKey = getEnv("GOOGLE_PLACES_API_KEY");
     if (!apiKey) {
       console.error("reviews: GOOGLE_PLACES_API_KEY not set");
       return NextResponse.json(

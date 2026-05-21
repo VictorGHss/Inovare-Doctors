@@ -1,4 +1,6 @@
 import type { ClinicConfig, Doctor } from "@/types/doctor";
+import { getEnv } from "@/lib/env";
+
 
 export type ReviewSourceEntry = {
   key: string;
@@ -75,8 +77,9 @@ const normalizeTokens = (tokens: string[]) =>
     .filter(Boolean);
 
 export function resolveReviewConfig(doctor: Doctor | undefined, clinic: ClinicConfig): ResolvedReviewConfig {
-  const envMinRating = Number(process.env.MIN_REVIEW_RATING ?? "3.5");
-  const envTokens = normalizeTokens((process.env.REVIEW_SURNAMES || process.env.REVIEW_SURNAME || "").split(","));
+  const envMinRating = Number(getEnv("MIN_REVIEW_RATING") ?? "3.5");
+  const envTokens = normalizeTokens((getEnv("REVIEW_SURNAMES") || getEnv("REVIEW_SURNAME") || "").split(","));
+
 
   const source = doctor?.google?.reviewSource;
   let sourceMode: ResolvedReviewConfig["sourceMode"] =
