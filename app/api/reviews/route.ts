@@ -46,11 +46,10 @@ async function fetchDoctoraliaReviews(doctoraliaUrl: string): Promise<Doctoralia
 
     // 2. Extract Individual Reviews
     const reviews: Review[] = [];
-    const reviewBlockRegex = /itemprop="review"\s+itemscope\s+itemtype="http:\/\/schema\.org\/Review"[\s\S]*?itemprop="reviewBody"[\s\S]*?<\/p>/gi;
+    const parts = html.split(/itemprop="review"\s+itemscope/i);
     
-    let match;
-    while ((match = reviewBlockRegex.exec(html)) !== null) {
-      const block = match[0];
+    for (let i = 1; i < parts.length; i++) {
+      const block = parts[i].slice(0, 8000);
       
       const authorMatch = block.match(/itemprop="name"[^>]*>\s*([^<]+?)\s*<\/span>/i);
       const author = authorMatch ? authorMatch[1].trim() : "Paciente";
