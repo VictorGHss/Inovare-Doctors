@@ -90,6 +90,7 @@ export async function GET(req: Request) {
     const slugParam = url.searchParams.get("slug");
     const limitParam = Number(url.searchParams.get("limit") ?? "3");
     const offsetParam = Number(url.searchParams.get("offset") ?? "0");
+    const vParam = url.searchParams.get("v") || "";
 
     const clinic = getClinicConfig();
     
@@ -156,7 +157,7 @@ export async function GET(req: Request) {
     }
 
     const cacheKey = new Request(
-      `${url.origin}/api/reviews?slug=${slugParam ?? ""}&limit=${limit}&offset=${offset}&minRating=${minRating}`
+      `${url.origin}/api/reviews?slug=${slugParam ?? ""}&limit=${limit}&offset=${offset}&minRating=${minRating}&v=${vParam}`
     );
     
     let cache: any = undefined;

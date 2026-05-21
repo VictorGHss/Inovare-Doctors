@@ -54,6 +54,7 @@ export function ReviewsSection({ slug, placeId, mapsUrl, fallbackLabel }: Props)
     params.set("offset", "0");
     if (slug) params.set("slug", slug);
     if (placeId) params.set("placeId", placeId);
+    params.set("v", "doctoralia"); // Cache bust to prevent loading old cached Google reviews
 
     fetch(`/api/reviews?${params.toString()}`, {
       signal: controller.signal
@@ -87,6 +88,7 @@ export function ReviewsSection({ slug, placeId, mapsUrl, fallbackLabel }: Props)
       params.set("offset", String(nextOffset));
       if (slug) params.set("slug", slug);
       if (placeId) params.set("placeId", placeId);
+      params.set("v", "doctoralia"); // Cache bust to prevent loading old cached Google reviews
 
       const res = await fetch(`/api/reviews?${params.toString()}`);
       if (!res.ok) throw new Error("failed");
