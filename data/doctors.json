@@ -596,6 +596,34 @@
   "photos": [
     "https://uropg.s3.sa-east-1.amazonaws.com/images/medics/2_tl2hVsQV49Aa0Jl.png"
   ]
-}
+},
+    {
+      "slug": "alisson-fucio",
+      "name": "Dr. Alisson Vinicius Emerique Fucio",
+      "crm": "CRM – 19297 / RQE: 12808",
+      "specialties": ["Urologia", "Cirurgia Robótica"],
+      "bio": "Graduação em Medicina pela UFPR. Residência em Cirurgia Geral pelo Hospital Governador Celso Ramos (Florianópolis) e em Urologia pelo Hospital Nossa Senhora das Graças (Curitiba). Pós-graduação em Medicina do Esporte pela Unileya (Brasília). Atuante em Urologia Clínica e Cirúrgica, endourologia e Urologia Minimamente Invasiva. Médico responsável pela especialidade de Urologia na Unimed Ponta Grossa.",
+      "contacts": {
+        "instagram": ["https://www.instagram.com/alissonfucio"],
+        "whatsapp": ["(42) 3026-2601"],
+        "links": [
+          {
+            "label": "Doctoralia",
+            "url": "https://www.doctoralia.com.br/alisson-vinicius-emerique-fucio/urologista/ponta-grossa"
+          }
+        ]
+      },
+      "google": {
+        "placeId": "ChIJN3Bz2lwa6JQRzi0rQrcYanw",
+        "mapsUrl": "https://share.google/p022RHx2Y1ELOYfNu",
+        "reviewSource": {
+          "mode": "clinic",
+          "placeId": "ChIJN3Bz2lwa6JQRzi0rQrcYanw"
+        }
+      },
+      "photos": [
+        "/placeholder-doctor.png"
+      ]
+    }
   ]
 }
