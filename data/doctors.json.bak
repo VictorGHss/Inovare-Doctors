@@ -444,6 +444,7 @@
         "mapsUrl": "https://share.google/lnfL4VpRtTycscIyR"
       },
       "photos": [
+        "https://empgeassim.com.br/wp-content/uploads/2024/08/DrMagno1.jpg",
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJc8pB5uepW682vRpm69GVKQn48czz5Ts_0Q&s"
       ]
     },
@@ -629,6 +630,26 @@
       },
       "photos": [
         "https://uropg.s3.sa-east-1.amazonaws.com/images/medics/1_8hiey00uBztIs8F.png"
+      ]
+    },
+    {
+      "slug": "marcelo-tessari",
+      "name": "Dr. Marcelo Tessari",
+      "crm": "CRM – 13326 / RQE: 12731",
+      "specialties": ["Neurocirurgia"],
+      "bio": "Graduado em Medicina pela Universidade Federal do Paraná. Especialista em Neurologia e Neurocirurgia pelo Hospital de Clínicas – UFPR.",
+      "contacts": {
+        "whatsapp": ["(42) 3026-2601"],
+        "phones": ["(42) 3026-2650"],
+        "links": [
+          {
+            "label": "Agende Sua Consulta!",
+            "url": "https://www.doctoralia.com.br/marcelo-tessari-2/neurocirurgiao/ponta-grossa"
+          }
+        ]
+      },
+      "photos": [
+        "https://inovare.med.br/wp-content/uploads/2023/02/MARCELO-TESSARI_Easy-Resize.com_-300x300.jpg"
       ]
     }
   ]

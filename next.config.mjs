@@ -10,6 +10,7 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'uropg.s3.sa-east-1.amazonaws.com' },
       { protocol: 'https', hostname: 'inovare.med.br' },
+      { protocol: 'https', hostname: 'empgeassim.com.br' },
       { protocol: 'https', hostname: 'res.cloudinary.com' },
       { protocol: 'https', hostname: '*.googleusercontent.com' },
       { protocol: 'http', hostname: 'googleusercontent.com' },
