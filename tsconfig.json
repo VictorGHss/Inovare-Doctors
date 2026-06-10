@@ -21,7 +21,9 @@
     "incremental": true,
     "types": [
       "@cloudflare/workers-types",
-      "@cloudflare/workers-types/experimental"
+      "@cloudflare/workers-types/experimental",
+      "react",
+      "node"
     ],
     "paths": {
       "@/*": [

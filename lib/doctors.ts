@@ -1,5 +1,5 @@
 import { doctorsData } from "../data/doctors";
-import type { ClinicConfig, Doctor, DoctorsData, GoogleInfo } from "@/types/doctor";
+import type { ClinicConfig, Doctor, GoogleInfo } from "@/types/doctor";
 
 const data = doctorsData;
 

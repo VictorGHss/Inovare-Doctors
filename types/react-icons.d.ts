@@ -5,6 +5,7 @@ declare module "react-icons/fi" {
   export const FiPhone: any;
   export const FiMail: any;
   export const FiExternalLink: any;
+  export const FiCalendar: any;
 }
 
 declare module "react-icons/ri" {
