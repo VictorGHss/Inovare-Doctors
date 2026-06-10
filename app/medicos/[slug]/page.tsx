@@ -7,7 +7,7 @@ import { SiteFooter } from "@/app/components/SiteFooter";
 import { ActionButton } from "@/app/components/ActionButton";
 import { getClinicConfig, getDoctorBySlug, getDoctorSlugs, getGoogleInfo } from "@/lib/doctors";
 import { resolveReviewConfig } from "@/lib/reviewSources";
-import { FiInstagram, FiMail, FiMapPin, FiPhone, FiFacebook } from "react-icons/fi";
+import { FiInstagram, FiMail, FiMapPin, FiPhone, FiFacebook, FiCalendar } from "react-icons/fi";
 import { RiWhatsappLine } from "react-icons/ri";
 import { buildTelLink, buildWhatsappLink, displayLabel } from "@/lib/phone";
 
@@ -161,16 +161,21 @@ export default async function DoctorPage({
             {linksList.map((link) => {
               const label = link.label.toLowerCase();
               const url = link.url.toLowerCase();
-              const icon =
-                label.includes("facebook") || url.includes("facebook.com")
+              const isDoctoralia = label.includes("doctoralia") || url.includes("doctoralia.com");
+
+              const icon = isDoctoralia
+                ? <FiCalendar />
+                : label.includes("facebook") || url.includes("facebook.com")
                   ? <FiFacebook />
                   : label.includes("instagram") || url.includes("instagram.com")
                     ? <FiInstagram />
                     : undefined;
 
+              const text = isDoctoralia ? "Agende Sua Consulta!" : link.label;
+
               return (
                 <ActionButton key={link.url} href={link.url} variant="soft" external icon={icon}>
-                  {link.label}
+                  {text}
                 </ActionButton>
               );
             })}

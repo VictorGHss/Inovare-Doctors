@@ -85,14 +85,14 @@ export const doctorsData: DoctorsData = {
       slug: "carlos-koga",
       name: "Dr. Carlos Koga",
       crm: "CRM – 15982 / RQE: 14787",
-      specialties: ["Urologia", "Cirurgia Robótica"],
+      specialties: ["Urologia", "Cirurgia Robótica", "Uro-oncologia", "Urolitíase", "Urologia Geral", "Andrologia", "Cirurgia Minimamente Invasiva", "Cálculos Renais"],
       bio: "Graduação em Medicina e residências em Cirurgia Geral e Urologia pela FAMEMA. Possui certificação em cirurgia Robótica (Intuitive da Vinci). Membro do corpo clínico do Hospital Nossa Senhora das Graças (Curitiba). Atuante em Urologia Clínica e Cirúrgica, endourologia, Urologia Minimamente Invasiva, Uro-oncologia, Laparoscopia e Robótica.",
       contacts: {
         instagram: ["https://www.instagram.com/carlosheidikoga"],
         whatsapp: ["(42) 3026-2601"],
         phones: ["(42) 3026-2650"],
         links: [
-          { "label": "Doctoralia", "url": "https://www.doctoralia.com.br/carlos-koga/urologista/ponta-grossa" }
+          { "label": "Agende Sua Consulta!", "url": "https://www.doctoralia.com.br/carlos-koga/urologista/ponta-grossa" }
         ]
       },
       google: {
@@ -111,7 +111,7 @@ export const doctorsData: DoctorsData = {
       slug: "alisson-fucio",
       name: "Dr. Alisson Vinicius Emerique Fucio",
       crm: "CRM – 19297 / RQE: 12808",
-      specialties: ["Urologia", "Cirurgia Robótica"],
+      specialties: ["Urologia", "Cirurgia Robótica", "Uro-oncologia", "Urolitíase", "Urologia Geral", "Andrologia", "Cirurgia Minimamente Invasiva", "Cálculos Renais"],
       bio: "Graduação em Medicina pela UFPR. Residência em Cirurgia Geral pelo Hospital Governador Celso Ramos (Florianópolis) e em Urologia pelo Hospital Nossa Senhora das Graças (Curitiba). Pós-graduação em Medicina do Esporte pela Unileya (Brasília). Atuante em Urologia Clínica e Cirúrgica, endourologia e Urologia Minimamente Invasiva. Médico responsável pela especialidade de Urologia na Unimed Ponta Grossa.",
       contacts: {
         instagram: ["https://www.instagram.com/alissonfucio"],
@@ -141,9 +141,6 @@ export const doctorsData: DoctorsData = {
 /*
 ================================================================================
 MÉDICOS INATIVOS (AGUARDANDO PAGAMENTO):
-Estes médicos foram deixados em comentário exatamente como solicitado.
-Para reativar qualquer um deles, basta mover o objeto de volta para o array
-'doctors' acima e salvar o arquivo.
 ================================================================================
 
 const inactiveDoctors = [

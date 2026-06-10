@@ -578,12 +578,18 @@
   "slug": "carlos-koga",
   "name": "Dr. Carlos Koga",
   "crm": "CRM – 15982 / RQE: 14787",
-  "specialties": ["Urologia", "Cirurgia Robótica"],
+  "specialties": ["Urologia", "Cirurgia Robótica", "Uro-oncologia", "Urolitíase", "Urologia Geral", "Andrologia", "Cirurgia Minimamente Invasiva", "Cálculos Renais"],
   "bio": "Graduação em Medicina e residências em Cirurgia Geral e Urologia pela FAMEMA. Possui certificação em cirurgia Robótica (Intuitive da Vinci). Membro do corpo clínico do Hospital Nossa Senhora das Graças (Curitiba). Atuante em Urologia Clínica e Cirúrgica, endourologia, Urologia Minimamente Invasiva, Uro-oncologia, Laparoscopia e Robótica.",
   "contacts": {
     "instagram": ["https://www.instagram.com/carlosheidikoga"],
     "whatsapp": ["(42) 3026-2601"],
-    "phones": ["(42) 3026-2650"]
+    "phones": ["(42) 3026-2650"],
+    "links": [
+      {
+        "label": "Agende Sua Consulta!",
+        "url": "https://www.doctoralia.com.br/carlos-koga/urologista/ponta-grossa"
+      }
+    ]
   },
   "google": {
     "placeId": "ChIJ51J6mhUa6JQRNypFNmE2No0",
@@ -601,7 +607,7 @@
       "slug": "alisson-fucio",
       "name": "Dr. Alisson Vinicius Emerique Fucio",
       "crm": "CRM – 19297 / RQE: 12808",
-      "specialties": ["Urologia", "Cirurgia Robótica"],
+      "specialties": ["Urologia", "Cirurgia Robótica", "Uro-oncologia", "Urolitíase", "Urologia Geral", "Andrologia", "Cirurgia Minimamente Invasiva", "Cálculos Renais"],
       "bio": "Graduação em Medicina pela UFPR. Residência em Cirurgia Geral pelo Hospital Governador Celso Ramos (Florianópolis) e em Urologia pelo Hospital Nossa Senhora das Graças (Curitiba). Pós-graduação em Medicina do Esporte pela Unileya (Brasília). Atuante em Urologia Clínica e Cirúrgica, endourologia e Urologia Minimamente Invasiva. Médico responsável pela especialidade de Urologia na Unimed Ponta Grossa.",
       "contacts": {
         "instagram": ["https://www.instagram.com/alissonfucio"],
