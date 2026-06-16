@@ -145,9 +145,7 @@ export const doctorsData: DoctorsData = {
       contacts: {
         whatsapp: ["(42) 3026-2601"],
         phones: ["(42) 3026-2650"],
-        links: [
-          { "label": "Agende Sua Consulta!", "url": "https://www.doctoralia.com.br/marcelo-tessari-2/neurocirurgiao/ponta-grossa" }
-        ]
+
       },
       photos: [
         "https://inovare.med.br/wp-content/uploads/2023/02/MARCELO-TESSARI_Easy-Resize.com_-300x300.jpg"
