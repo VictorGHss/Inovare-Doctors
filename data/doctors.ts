@@ -174,7 +174,7 @@ export const doctorsData: DoctorsData = {
       specialties: ["Cirurgia do Aparelho Digestivo", "Endoscopia Digestiva"],
       bio: "Especialista em Cirurgia do Aparelho Digestivo (UFPR). Pós-graduado em Cirurgia Digestiva (Universidade de Okayama, Japão). Especialista em Endoscopia Digestiva (SOBED).",
       contacts: {
-        phones: ["(42) 3026-2600", "(42) 3026-2651", "(42) 3026-2632", "(42) 3026-2630", "(42) 3026-2631", "(42) 3026-2633"],
+        phones: ["(42) 3026-2600", "(42) 3026-2651"],
         whatsapp: ["(42) 3026-2601"],
         links: [
           {

@@ -19,13 +19,14 @@ type DoctoraliaData = {
   reviews: Review[];
 };
 
-// Helper function to fetch and scrape Doctoralia reviews
+// Helper function to fetch and scrape Doctoralia reviews via JSON-LD + HTML fallbacks
 async function fetchDoctoraliaReviews(doctoraliaUrl: string): Promise<DoctoraliaData | null> {
   try {
     const response = await fetch(doctoraliaUrl, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
       }
     });
 
@@ -36,44 +37,57 @@ async function fetchDoctoraliaReviews(doctoraliaUrl: string): Promise<Doctoralia
 
     const html = await response.text();
 
-    // 1. Extract Overall Rating & Review Count
-    const ratingValueMatch = html.match(/itemprop="ratingValue"\s+content="([\d.]+)"/) || html.match(/content="([\d.]+)"\s+itemprop="ratingValue"/);
-    const reviewCountMatch = html.match(/itemprop="reviewCount"\s+content="(\d+)"/) || html.match(/content="(\d+)"\s+itemprop="reviewCount"/);
-    
-    const user_ratings_total = reviewCountMatch ? Number(reviewCountMatch[1]) : 0;
-    const rating = user_ratings_total > 0 && ratingValueMatch ? Number(ratingValueMatch[1]) : null;
+    // 1. Try parsing JSON-LD script blocks (Doctoralia standard schema)
+    const jsonLdBlocks = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi) || [];
+    for (const block of jsonLdBlocks) {
+      const rawJson = block.replace(/<script[^>]*>/i, "").replace(/<\/script>/i, "").trim();
+      try {
+        const data = JSON.parse(rawJson);
+        if (data["@type"] === "Physician" || data.aggregateRating || data.review) {
+          const rating = data.aggregateRating?.ratingValue ? Number(data.aggregateRating.ratingValue) : null;
+          const user_ratings_total = data.aggregateRating?.reviewCount ? Number(data.aggregateRating.reviewCount) : 0;
+          const rawReviews = Array.isArray(data.review) ? data.review : data.review ? [data.review] : [];
+          
+          const reviews: Review[] = rawReviews.map((r: any) => {
+            const authorName = typeof r.author === "object" ? (r.author?.name || "Paciente") : (r.author || "Paciente");
+            const ratingVal = typeof r.reviewRating === "object" ? Number(r.reviewRating?.ratingValue || 5) : Number(r.reviewRating || 5);
+            const text = (r.reviewBody || "").trim();
+            
+            let relativeTime = "Recente";
+            if (r.datePublished) {
+              try {
+                const d = new Date(r.datePublished);
+                if (!isNaN(d.getTime())) {
+                  relativeTime = d.toLocaleDateString("pt-BR");
+                }
+              } catch (e) {}
+            }
+            
+            return {
+              author_name: authorName,
+              rating: ratingVal,
+              text,
+              relative_time_description: relativeTime
+            };
+          });
 
-    // 2. Extract Individual Reviews
-    const reviews: Review[] = [];
-    const parts = html.split(/itemprop="review"\s+itemscope/i);
-    
-    for (let i = 1; i < parts.length; i++) {
-      const block = parts[i].slice(0, 8000);
-      
-      const authorMatch = block.match(/itemprop="name"[^>]*>\s*([^<]+?)\s*<\/span>/i);
-      const author = authorMatch ? authorMatch[1].trim() : "Paciente";
-      
-      const scoreMatch = block.match(/data-score="(\d+)"/i) || block.match(/content="(\d+)"\s+itemprop="ratingValue"/i);
-      const reviewRating = scoreMatch ? Number(scoreMatch[1]) : 5;
-      
-      const bodyMatch = block.match(/itemprop="reviewBody"[^>]*>\s*([\s\S]+?)\s*<\/p>/i);
-      const text = bodyMatch ? bodyMatch[1].trim().replace(/\s+/g, ' ') : "";
-      
-      const dateMatch = block.match(/<time[^>]*>([^<]+)<\/time>/i);
-      const relativeTime = dateMatch ? dateMatch[1].trim() : "Recentemente";
-      
-      reviews.push({
-        author_name: author,
-        rating: reviewRating,
-        text,
-        relative_time_description: relativeTime
-      });
+          return { rating, user_ratings_total, reviews };
+        }
+      } catch (e) {
+        // Continue if JSON parsing fails for a block
+      }
     }
+
+    // 2. Fallback if JSON-LD is not found or doctor has no reviews yet
+    const opinionsCountMatch = html.match(/data-eec-opinions-count=['"](\d+)['"]/i);
+    const starsRatingMatch = html.match(/data-eec-stars-rating=['"]([\d.]+)['"]/i);
+    const user_ratings_total = opinionsCountMatch ? Number(opinionsCountMatch[1]) : 0;
+    const rating = starsRatingMatch && user_ratings_total > 0 ? Number(starsRatingMatch[1]) : null;
 
     return {
       rating,
       user_ratings_total,
-      reviews
+      reviews: []
     };
   } catch (error) {
     console.error(`reviews: failed to fetch or parse doctoralia reviews for URL ${doctoraliaUrl}:`, error);
@@ -181,8 +195,25 @@ export async function GET(req: Request) {
 
     if (!doctoraliaData) {
       return new Response(
-        JSON.stringify({ error: "Failed to fetch Doctoralia reviews" }),
-        { status: 502, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
+        JSON.stringify({
+          rating: null,
+          user_ratings_total: 0,
+          url: doctoraliaUrl,
+          reviews: [],
+          returned: 0,
+          totalAfterFilter: 0,
+          nextOffset: null,
+          displayLabel: resolved.displayLabel ?? "Avaliações do Doctoralia"
+        }),
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": `public, max-age=${CACHE_TTL}`,
+            "Access-Control-Allow-Origin": "*",
+            "x-reviews-handler": "next-route"
+          }
+        }
       );
     }
 
