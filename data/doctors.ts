@@ -105,7 +105,9 @@ export const doctorsData: DoctorsData = {
         }
       },
       photos: [
-        "https://uropg.s3.sa-east-1.amazonaws.com/images/medics/2_tl2hVsQV49Aa0Jl.png"
+        "/images/doctors/carlos-koga-1.jpg",
+        "/images/doctors/carlos-koga-2.jpg",
+        "/images/doctors/carlos-koga-3.jpg"
       ]
     },
     {
@@ -133,7 +135,53 @@ export const doctorsData: DoctorsData = {
         }
       },
       photos: [
-        "https://uropg.s3.sa-east-1.amazonaws.com/images/medics/1_8hiey00uBztIs8F.png"
+        "/images/doctors/alisson-fucio.jpg"
+      ]
+    },
+    {
+      slug: "eduardo-bisinella",
+      name: "Dr. Eduardo Bisinella",
+      specialties: ["Urologia", "Cirurgia Robótica", "Endourologia", "Cirurgia Minimamente Invasiva", "Urologia Geral"],
+      bio: "Graduação em Medicina pela Universidade de Passo Fundo - RS. Residência em Cirurgia Geral pelo Hospital Nossa Senhora da Conceição - Porto Alegre - RS. Residência em Urologia pelo Hospital Nossa Senhora da Conceição - Porto Alegre - RS. Certificação em Cirurgia Robótica, Intuitive, da Vinci. Atende em Ponta Grossa - PR, Clínica Inovare. Atuante em Urologia Geral, endourologia, cirurgia minimamente invasiva e robótica. Médico responsável pela especialidade de Urologia na Unimed Ponta Grossa.",
+      contacts: {
+        instagram: ["https://www.instagram.com/bisinellaeduardo/"],
+        whatsapp: ["(42) 3026-2601"],
+        phones: ["(42) 3026-2650"]
+      },
+      google: {
+        placeId: "ChIJN3Bz2lwa6JQRzi0rQrcYanw",
+        mapsUrl: "https://share.google/JYhgFNv4A58Tz26VB",
+        reviewSource: {
+          mode: "clinic",
+          placeId: "ChIJN3Bz2lwa6JQRzi0rQrcYanw",
+          surnameTokens: ["Bisinella", "Eduardo"]
+        }
+      },
+      photos: [
+        "/images/doctors/eduardo-bisinella.jpg"
+      ]
+    },
+    {
+      slug: "cesar-toshio-oda",
+      name: "Dr. Cesar Toshio Oda",
+      crm: "CRM – 7286 / RQE: 875 – 15198 – 15199",
+      specialties: ["Cirurgia do Aparelho Digestivo", "Endoscopia Digestiva"],
+      bio: "Especialista em Cirurgia do Aparelho Digestivo (UFPR). Pós-graduado em Cirurgia Digestiva (Universidade de Okayama, Japão). Especialista em Endoscopia Digestiva (SOBED).",
+      contacts: {
+        phones: ["(42) 3026-2600", "(42) 3026-2651", "(42) 3026-2632", "(42) 3026-2630", "(42) 3026-2631", "(42) 3026-2633"],
+        whatsapp: ["(42) 3026-2601"]
+      },
+      google: {
+        placeId: "ChIJsZbOvwUa6JQR9B2EBx_JsUI",
+        reviewSource: {
+          mode: "group",
+          placeId: "ChIJsZbOvwUa6JQR9B2EBx_JsUI",
+          surnameTokens: ["Oda"]
+        }
+      },
+      photos: [
+        "/images/doctors/cesar-toshio.jpg",
+        "/images/doctors/cesar-toshio-2.jpg"
       ]
     },
     {
@@ -144,8 +192,7 @@ export const doctorsData: DoctorsData = {
       bio: "Graduado em Medicina pela Universidade Federal do Paraná. Especialista em Neurologia e Neurocirurgia pelo Hospital de Clínicas – UFPR.",
       contacts: {
         whatsapp: ["(42) 3026-2601"],
-        phones: ["(42) 3026-2650"],
-
+        phones: ["(42) 3026-2650"]
       },
       photos: [
         "https://inovare.med.br/wp-content/uploads/2023/02/MARCELO-TESSARI_Easy-Resize.com_-300x300.jpg"
