@@ -216,9 +216,12 @@
       "specialties": [
         "Urologia",
         "Cirurgia Robótica",
-        "Endourologia",
+        "Uro-oncologia",
+        "Urolitíase",
+        "Urologia Geral",
+        "Andrologia",
         "Cirurgia Minimamente Invasiva",
-        "Urologia Geral"
+        "Cálculos Renais"
       ],
       "bio": "Graduação em Medicina pela Universidade de Passo Fundo - RS. Residência em Cirurgia Geral pelo Hospital Nossa Senhora da Conceição - Porto Alegre - RS. Residência em Urologia pelo Hospital Nossa Senhora da Conceição - Porto Alegre - RS. Certificação em Cirurgia Robótica, Intuitive, da Vinci. Atende em Ponta Grossa - PR, Clínica Inovare. Atuante em Urologia Geral, endourologia, cirurgia minimamente invasiva e robótica. Médico responsável pela especialidade de Urologia na Unimed Ponta Grossa.",
       "contacts": {
@@ -230,6 +233,12 @@
         ],
         "phones": [
           "(42) 3026-2650"
+        ],
+        "links": [
+          {
+            "label": "Agende Sua Consulta!",
+            "url": "https://www.doctoralia.com.br/eduardo-bisinella-4/urologista/ponta-grossa"
+          }
         ]
       },
       "google": {
@@ -263,6 +272,12 @@
         ],
         "whatsapp": [
           "(42) 3026-2601"
+        ],
+        "links": [
+          {
+            "label": "Agende Sua Consulta!",
+            "url": "https://www.doctoralia.com.br/cesar-toshio-oda/cirurgiao-geral-cirurgiao-do-aparelho-digestivo-endoscopista/ponta-grossa"
+          }
         ]
       },
       "google": {

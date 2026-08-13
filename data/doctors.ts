@@ -146,7 +146,13 @@ export const doctorsData: DoctorsData = {
       contacts: {
         instagram: ["https://www.instagram.com/bisinellaeduardo/"],
         whatsapp: ["(42) 3026-2601"],
-        phones: ["(42) 3026-2650"]
+        phones: ["(42) 3026-2650"],
+        links: [
+          {
+            "label": "Agende Sua Consulta!",
+            "url": "https://www.doctoralia.com.br/eduardo-bisinella-4/urologista/ponta-grossa"
+          }
+        ]
       },
       google: {
         placeId: "ChIJN3Bz2lwa6JQRzi0rQrcYanw",
@@ -169,7 +175,13 @@ export const doctorsData: DoctorsData = {
       bio: "Especialista em Cirurgia do Aparelho Digestivo (UFPR). Pós-graduado em Cirurgia Digestiva (Universidade de Okayama, Japão). Especialista em Endoscopia Digestiva (SOBED).",
       contacts: {
         phones: ["(42) 3026-2600", "(42) 3026-2651", "(42) 3026-2632", "(42) 3026-2630", "(42) 3026-2631", "(42) 3026-2633"],
-        whatsapp: ["(42) 3026-2601"]
+        whatsapp: ["(42) 3026-2601"],
+        links: [
+          {
+            "label": "Agende Sua Consulta!",
+            "url": "https://www.doctoralia.com.br/cesar-toshio-oda/cirurgiao-geral-cirurgiao-do-aparelho-digestivo-endoscopista/ponta-grossa"
+          }
+        ]
       },
       google: {
         placeId: "ChIJsZbOvwUa6JQR9B2EBx_JsUI",
