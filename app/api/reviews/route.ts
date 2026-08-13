@@ -4,7 +4,7 @@ import { getEnv } from "@/lib/env";
 
 export const runtime = "edge";
 
-const CACHE_TTL = 60 * 60 * 6; // 6 hours cache
+const CACHE_TTL = 60 * 60 * 6; // 6 hours cache for valid reviews
 
 type Review = {
   author_name: string;
@@ -19,14 +19,23 @@ type DoctoraliaData = {
   reviews: Review[];
 };
 
-// Helper function to fetch and scrape Doctoralia reviews via JSON-LD + HTML fallbacks
+// Helper function to fetch and scrape Doctoralia reviews via JSON-LD + regex fallbacks
 async function fetchDoctoraliaReviews(doctoraliaUrl: string): Promise<DoctoraliaData | null> {
   try {
     const response = await fetch(doctoraliaUrl, {
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Referer": "https://www.google.com/",
+        "Sec-Ch-Ua": '"Not-A.Brand";v="99", "Chromium";v="124"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": '"Windows"',
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "cross-site",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1"
       }
     });
 
@@ -78,11 +87,12 @@ async function fetchDoctoraliaReviews(doctoraliaUrl: string): Promise<Doctoralia
       }
     }
 
-    // 2. Fallback if JSON-LD is not found or doctor has no reviews yet
-    const opinionsCountMatch = html.match(/data-eec-opinions-count=['"](\d+)['"]/i);
-    const starsRatingMatch = html.match(/data-eec-stars-rating=['"]([\d.]+)['"]/i);
-    const user_ratings_total = opinionsCountMatch ? Number(opinionsCountMatch[1]) : 0;
-    const rating = starsRatingMatch && user_ratings_total > 0 ? Number(starsRatingMatch[1]) : null;
+    // 2. Fallback: regex search for AggregateRating in HTML
+    const ratingValMatch = html.match(/"ratingValue"\s*:\s*([\d.]+)/) || html.match(/ratingValue["']?\s*[:=]\s*["']?([\d.]+)/);
+    const reviewCountMatch = html.match(/"reviewCount"\s*:\s*(\d+)/) || html.match(/reviewCount["']?\s*[:=]\s*["']?(\d+)/);
+    
+    const user_ratings_total = reviewCountMatch ? Number(reviewCountMatch[1]) : 0;
+    const rating = ratingValMatch && user_ratings_total > 0 ? Number(ratingValMatch[1]) : null;
 
     return {
       rating,
@@ -102,7 +112,6 @@ export async function GET(req: Request) {
     const slugParam = url.searchParams.get("slug");
     const limitParam = Number(url.searchParams.get("limit") ?? "3");
     const offsetParam = Number(url.searchParams.get("offset") ?? "0");
-    const vParam = url.searchParams.get("v") || "";
 
     const clinic = getClinicConfig();
     
@@ -115,7 +124,7 @@ export async function GET(req: Request) {
     if (slugParam && !doctor) {
       return new Response(
         JSON.stringify({ error: "Doctor not found" }),
-        { status: 404, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
+        { status: 404, headers: { "Content-Type": "application/json", "x-reviews-handler": "doctoralia-v4" } }
       );
     }
 
@@ -160,16 +169,16 @@ export async function GET(req: Request) {
           status: 200,
           headers: {
             "Content-Type": "application/json",
-            "Cache-Control": `public, max-age=${CACHE_TTL}`,
+            "Cache-Control": "no-cache, no-store, must-revalidate",
             "Access-Control-Allow-Origin": "*",
-            "x-reviews-handler": "next-route"
+            "x-reviews-handler": "doctoralia-v4"
           }
         }
       );
     }
 
     const cacheKey = new Request(
-      `${url.origin}/api/reviews?slug=${slugParam ?? ""}&limit=${limit}&offset=${offset}&minRating=${minRating}&v=${vParam}`
+      `${url.origin}/api/reviews?slug=${slugParam ?? ""}&limit=${limit}&offset=${offset}&minRating=${minRating}&v=doctoralia-v4`
     );
     
     let cache: any = undefined;
@@ -193,43 +202,20 @@ export async function GET(req: Request) {
     // Fetch and parse the Doctoralia reviews
     const doctoraliaData = await fetchDoctoraliaReviews(doctoraliaUrl);
 
-    if (!doctoraliaData) {
-      return new Response(
-        JSON.stringify({
-          rating: null,
-          user_ratings_total: 0,
-          url: doctoraliaUrl,
-          reviews: [],
-          returned: 0,
-          totalAfterFilter: 0,
-          nextOffset: null,
-          displayLabel: resolved.displayLabel ?? "Avaliações do Doctoralia"
-        }),
-        {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-            "Cache-Control": `public, max-age=${CACHE_TTL}`,
-            "Access-Control-Allow-Origin": "*",
-            "x-reviews-handler": "next-route"
-          }
-        }
-      );
-    }
-
-    const filteredReviews = doctoraliaData.reviews
-      .filter((review) => {
-        if (typeof review.rating === "number" && review.rating < minRating) return false;
-        return true;
-      });
+    const filteredReviews = doctoraliaData?.reviews
+      ? doctoraliaData.reviews.filter((review) => {
+          if (typeof review.rating === "number" && review.rating < minRating) return false;
+          return true;
+        })
+      : [];
 
     const totalAfterFilter = filteredReviews.length;
     const paged = filteredReviews.slice(offset, offset + limit);
     const nextOffset = offset + limit < totalAfterFilter ? offset + limit : null;
 
     const payload = {
-      rating: doctoraliaData.rating,
-      user_ratings_total: doctoraliaData.user_ratings_total,
+      rating: doctoraliaData?.rating ?? null,
+      user_ratings_total: doctoraliaData?.user_ratings_total ?? 0,
       url: doctoraliaUrl,
       reviews: paged,
       returned: paged.length,
@@ -238,13 +224,27 @@ export async function GET(req: Request) {
       displayLabel: resolved.displayLabel ?? "Avaliações do Doctoralia"
     };
 
+    // If no reviews found or fetch failed, do not cache empty response
+    if (!doctoraliaData || payload.reviews.length === 0) {
+      return new Response(JSON.stringify(payload), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          "Access-Control-Allow-Origin": "*",
+          "x-reviews-handler": "doctoralia-v4"
+        }
+      });
+    }
+
+    // Only cache successful responses with actual reviews
     const response = new Response(JSON.stringify(payload), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
         "Cache-Control": `public, max-age=${CACHE_TTL}`,
         "Access-Control-Allow-Origin": "*",
-        "x-reviews-handler": "next-route"
+        "x-reviews-handler": "doctoralia-v4"
       }
     });
 
@@ -265,7 +265,7 @@ export async function GET(req: Request) {
         message: err instanceof Error ? err.message : String(err),
         stack: err instanceof Error ? err.stack : undefined
       }),
-      { status: 500, headers: { "Content-Type": "application/json", "x-reviews-handler": "next-route" } }
+      { status: 500, headers: { "Content-Type": "application/json", "x-reviews-handler": "doctoralia-v4" } }
     );
   }
 }
